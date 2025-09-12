@@ -5,12 +5,12 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Meio.app.MainWindow"
         Title="Meio">
-    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="500">
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="300">
         <TextBlock HorizontalAlignment="Center">Currently reading</TextBlock>
         <Border Margin="5" CornerRadius="10" Background="LightCoral">
-            <TextBlock Margin="5" FontSize="24" HorizontalAlignment="Center" Name="CurrentMusicText" Text="?? - ??" />
+            <TextBlock Margin="5" FontSize="24" HorizontalAlignment="Center" Name="CurrentMusicText" Text="Nothing" />
         </Border>
-        <Button Click="UploadButton_OnClick" Name="UploadButton" Content="Upload song" />
+        <Button Click="UploadButton_OnClick" Name="UploadButton" Content="Upload song" HorizontalAlignment="Center" />
         <Button HorizontalAlignment="Center" Click="Button_OnClick" Name="PlayButton" Content="Play" />
         <Slider ValueChanged="VolumeSlider_OnValueChanged" Maximum="10" Name="VolumeSlider" />
         <TextBlock Text="{Binding #VolumeSlider.Value}" />

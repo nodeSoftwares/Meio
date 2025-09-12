@@ -1,32 +1,25 @@
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
-using Avalonia.Platform.Storage;
-using Avalonia.Threading;
-using LibVLCSharp.Shared;
+using Meio.app.Services;
 
 namespace Meio.app;
 
 public partial class MainWindow : Window
 {
-    private readonly LibVLC _libVlc;
-    private readonly MediaPlayer _mediaPlayer;
+    private readonly MediaPlayerService _mediaPlayerService;
     private bool _debounce;
-    private string _filePath;
+    private string? _filePath;
     private CancellationTokenSource? _volumeDebounceToken;
-
 
     public MainWindow()
     {
         InitializeComponent();
-
-        _libVlc = new LibVLC(true);
-        _mediaPlayer = new MediaPlayer(_libVlc);
+        _mediaPlayerService = new MediaPlayerService();
     }
 
     private void Button_OnClick(object? sender, RoutedEventArgs e)
@@ -34,20 +27,18 @@ public partial class MainWindow : Window
         if (!_debounce)
         {
             _debounce = true;
-            Debug.WriteLine("Playing sound!");
 
             PlayButton.Content = "Stop";
-            CurrentMusicText.Text = Path.GetFileName(_filePath).Split('.')[0];
+            CurrentMusicText.Text = Path.GetFileName(_filePath)?.Split('.')[0]; // Set the audio file's name without the extension
 
-            var media = new Media(_libVlc, _filePath);
-            _mediaPlayer.Play(media);
+            if (_filePath != null) _mediaPlayerService.Play(_filePath);
         }
         else
         {
             PlayButton.Content = "Play";
-            CurrentMusicText.Text = "?? - ??";
+            CurrentMusicText.Text = "Nothing";
 
-            _mediaPlayer.Stop();
+            _mediaPlayerService.Stop();
             _debounce = false;
         }
     }
@@ -56,6 +47,7 @@ public partial class MainWindow : Window
     {
         _volumeDebounceToken?.Cancel();
         _volumeDebounceToken = new CancellationTokenSource();
+
         var token = _volumeDebounceToken.Token;
         var newVolume = (int)e.NewValue;
 
@@ -64,11 +56,7 @@ public partial class MainWindow : Window
                 try
                 {
                     await Task.Delay(100, token); // 100ms debounce
-                    if (!token.IsCancellationRequested)
-                    {
-                        // UI thread-safe call
-                        await Dispatcher.UIThread.InvokeAsync(() => { _mediaPlayer.Volume = newVolume; });
-                    }
+                    if (!token.IsCancellationRequested) _mediaPlayerService.ChangeVolume(newVolume);
                 }
                 catch (TaskCanceledException)
                 {
@@ -82,43 +70,12 @@ public partial class MainWindow : Window
     {
         try
         {
-            var url = await GetFileLinkDialog();
+            var url = await FileHelper.GetFilePathDialog(GetTopLevel(this));
             if (url != null) _filePath = Uri.UnescapeDataString(url.AbsolutePath);
         }
         catch (Exception exception)
         {
             Console.WriteLine(exception);
         }
-    }
-
-    private async Task<Uri?> GetFileLinkDialog()
-    {
-        // Get a reference to the TopLevel/window where this control is hosted
-        var topLevel = GetTopLevel(this);
-        if (topLevel == null)
-            return null;
-
-        var provider = topLevel.StorageProvider;
-
-        var options = new FilePickerOpenOptions
-        {
-            Title = "Select a File",
-            AllowMultiple = false,
-            FileTypeFilter =
-            [
-                new FilePickerFileType("All")
-                {
-                    Patterns = ["*.mp3", "*.wav"]
-                }
-            ]
-        };
-
-        var result = await provider.OpenFilePickerAsync(options);
-
-        if (result.Count <= 0) return null;
-        var file = result[0];
-        var filePath = file.Path;
-
-        return filePath;
     }
 }
