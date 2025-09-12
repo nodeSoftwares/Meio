@@ -4,6 +4,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Meio.app.MainWindow"
-        Title="Meio.app">
-    Welcome to Avalonia!
+        Title="Meio">
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="500">
+        <TextBlock HorizontalAlignment="Center">Currently reading</TextBlock>
+        <Border Margin="5" CornerRadius="10" Background="LightCoral">
+            <TextBlock Margin="5" FontSize="24" HorizontalAlignment="Center" Name="CurrentMusicText" Text="?? - ??" />
+        </Border>
+        <Button Click="UploadButton_OnClick" Name="UploadButton" Content="Upload song" />
+        <Button HorizontalAlignment="Center" Click="Button_OnClick" Name="PlayButton" Content="Play" />
+        <Slider ValueChanged="VolumeSlider_OnValueChanged" Maximum="10" Name="VolumeSlider" />
+        <TextBlock Text="{Binding #VolumeSlider.Value}" />
+    </StackPanel>
 </Window>
