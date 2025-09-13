@@ -2,6 +2,7 @@ using System;
 using Avalonia.Threading;
 using LibVLCSharp.Shared;
 using Microsoft.Extensions.Logging;
+// ReSharper disable UnusedMember.Global
 
 namespace Meio.app.Services;
 
@@ -43,7 +44,7 @@ public class AudioPlayerService
         }
         catch (Exception e)
         {
-            App.Logger?.LogError("{exception}", e);
+            App.Logger?.LogError("An error occured trying to play the audio file. {e}", e.Message);
         }
     }
 
@@ -62,7 +63,7 @@ public class AudioPlayerService
         }
         catch (Exception e)
         {
-            App.Logger?.LogError("{exception}", e);
+            App.Logger?.LogError("An error occured trying to play the audio file. {e}", e.Message);
         }
     }
 
@@ -90,8 +91,15 @@ public class AudioPlayerService
     /// <param name="newVolume">New volume of the media player.</param>
     public async void ChangeVolume(int newVolume)
     {
-        await Dispatcher.UIThread.InvokeAsync(() => { _mediaPlayer.Volume = newVolume; });
-        App.Logger!.LogTrace("Changed audio volume to {NewAudioVolume}.", newVolume);
+        try
+        {
+            await Dispatcher.UIThread.InvokeAsync(() => { _mediaPlayer.Volume = newVolume; });
+            App.Logger!.LogTrace("Changed audio volume to {NewAudioVolume}.", newVolume);
+        }
+        catch (Exception e)
+        {
+            App.Logger!.LogError("An error occured trying to change audio volume. {Exception}", e.Message);
+        }
     }
 
     /// <summary>
