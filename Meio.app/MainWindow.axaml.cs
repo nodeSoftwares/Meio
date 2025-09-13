@@ -5,15 +5,19 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using Meio.app.Services;
+using Microsoft.Extensions.Logging;
 
 namespace Meio.app;
 
 public partial class MainWindow : Window
 {
     private readonly AudioPlayerService _audioPlayerService;
+    private string? _author = "unknown"; // this is a cheap fix, but it is because this Window is just for testing, so it's alright.
     private bool _debounce;
     private string? _filePath;
     private CancellationTokenSource? _volumeDebounceToken;
+
+    // DIS WHOLE CODE IS HORIRBLE AAAAAAAAAA
 
     public MainWindow()
     {
@@ -30,11 +34,15 @@ public partial class MainWindow : Window
             if (_filePath == null) return;
 
             var metadata = AudioMetadataService.LoadMetadata(_filePath);
+            if (metadata == null) return;
+
             _audioPlayerService.Play(_filePath);
 
             PlayButton.Content = "Stop";
-            CurrentMusicText.Text = $"{metadata.Title} - {metadata.Artists?[0]}";
-            AlbumArtImage.Source = ImageHelper.LoadBitmapFromBytes(metadata.AlbumArt);
+            _author = metadata.Artists is { Length: 0 } ? "unknown" : metadata.Artists?[0];
+
+            CurrentMusicText.Text = $"{metadata.Title} - {_author}";
+            AlbumArtImage.Source = metadata.AlbumArt != null ? ImageHelper.LoadBitmapFromBytes(metadata.AlbumArt) : null;
         }
         else
         {
@@ -80,7 +88,7 @@ public partial class MainWindow : Window
         }
         catch (Exception exception)
         {
-            Console.WriteLine(exception);
+            App.Logger!.LogError("There was an error trying to parse the URI unescape data. {exception}", exception.Message);
         }
     }
 }

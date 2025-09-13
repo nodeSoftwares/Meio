@@ -30,7 +30,7 @@ public class App : Application
                 opt.ShowEventId = false;
                 opt.ShowManagedThreadId = false;
                 opt.SingleLine = true;
-                opt.IncludeScopes = false;
+                opt.IncludeScopes = true;
                 opt.ShowTimestamp = true;
                 opt.LogLevelCase = LogLevelCase.Upper;
                 opt.CategoryMode = LoggerCategoryMode.Short;
@@ -39,7 +39,7 @@ public class App : Application
             });
 
 #if DEBUG
-            builder.SetMinimumLevel(LogLevel.Debug);
+            builder.SetMinimumLevel(LogLevel.Trace);
 #else
             builder.SetMinimumLevel(LogLevel.Information);
 #endif

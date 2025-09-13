@@ -37,7 +37,12 @@ public static class FileHelper
         var result = await provider.OpenFilePickerAsync(options);
         App.Logger!.LogTrace("Asked for a file.");
 
-        if (result.Count <= 0) return null;
+        if (result.Count <= 0)
+        {
+            App.Logger!.LogTrace("No file was given.");
+            return null; // No file was given
+        }
+
         var file = result[0];
         var filePath = file.Path;
         App.Logger!.LogDebug("Got {FilePath} as file.", filePath);

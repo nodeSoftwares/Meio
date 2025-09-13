@@ -17,11 +17,11 @@ public class AudioPlayerService
         {
             _libVLC = new LibVLC();
             _mediaPlayer = new MediaPlayer(_libVLC);
-            App.Logger!.LogDebug("Initialized MediaPlayerService.");
+            App.Logger!.LogDebug("Initialized AudioPlayerService.");
         }
         catch (VLCException ex)
         {
-            App.Logger!.LogCritical("{Exception}.", ex);
+            App.Logger!.LogCritical("An error occured trying to initialize AudioPlayerService. {Exception}", ex.Message);
             App.Logger!.LogInformation(
                 "!! READ THIS !!\n If you are on a linux host, please make sure you have installed the libvlc library, you will not be able to read any audio otherwise !!!");
             Environment.Exit(-1);
@@ -39,7 +39,7 @@ public class AudioPlayerService
             var media = new Media(_libVLC, audioFilePath);
 
             _mediaPlayer.Play(media);
-            App.Logger!.LogDebug("Playing media file {AudioFilePath} .", audioFilePath);
+            App.Logger!.LogInformation("Playing media file {AudioFilePath} .", audioFilePath);
         }
         catch (Exception e)
         {
@@ -58,7 +58,7 @@ public class AudioPlayerService
             var media = new Media(_libVLC, audioUri.AbsolutePath, FromType.FromLocation);
 
             _mediaPlayer.Play(media);
-            App.Logger!.LogDebug("Playing media file from url {AudioFilePath} .", audioUri.AbsolutePath);
+            App.Logger!.LogInformation("Playing media file from url {AudioFilePath} .", audioUri.AbsolutePath);
         }
         catch (Exception e)
         {
