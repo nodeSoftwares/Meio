@@ -53,6 +53,7 @@ If you have any feedback, you can reach out on matrix\
 ## Acknowledgements
 
 - [LibVLCSharp](https://github.com/videolan/libvlcsharp)
+- [TagLibSharp](https://github.com/mono/taglib-sharp)
 - [PrettyLogging](https://github.com/xiaomi7732/PrettyLogging)
 - [Avalonia UI](https://avaloniaui.net/)
 

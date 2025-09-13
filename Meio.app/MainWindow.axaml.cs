@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
@@ -11,7 +10,7 @@ namespace Meio.app;
 
 public partial class MainWindow : Window
 {
-    private readonly MediaPlayerService _mediaPlayerService;
+    private readonly AudioPlayerService _audioPlayerService;
     private bool _debounce;
     private string? _filePath;
     private CancellationTokenSource? _volumeDebounceToken;
@@ -19,7 +18,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        _mediaPlayerService = new MediaPlayerService();
+        _audioPlayerService = new AudioPlayerService();
     }
 
     private void Button_OnClick(object? sender, RoutedEventArgs e)
@@ -28,17 +27,22 @@ public partial class MainWindow : Window
         {
             _debounce = true;
 
-            PlayButton.Content = "Stop";
-            CurrentMusicText.Text = Path.GetFileName(_filePath)?.Split('.')[0]; // Set the audio file's name without the extension
+            if (_filePath == null) return;
 
-            if (_filePath != null) _mediaPlayerService.Play(_filePath);
+            var metadata = AudioMetadataService.LoadMetadata(_filePath);
+            _audioPlayerService.Play(_filePath);
+
+            PlayButton.Content = "Stop";
+            CurrentMusicText.Text = $"{metadata.Title} - {metadata.Artists?[0]}";
+            AlbumArtImage.Source = ImageHelper.LoadBitmapFromBytes(metadata.AlbumArt);
         }
         else
         {
             PlayButton.Content = "Play";
             CurrentMusicText.Text = "Nothing";
+            AlbumArtImage.Source = null;
 
-            _mediaPlayerService.Stop();
+            _audioPlayerService.Stop();
             _debounce = false;
         }
     }
@@ -50,13 +54,14 @@ public partial class MainWindow : Window
 
         var token = _volumeDebounceToken.Token;
         var newVolume = (int)e.NewValue;
+        VolumeText.Text = $"{newVolume * 100 / 30}%";
 
         Task.Run(async () =>
             {
                 try
                 {
                     await Task.Delay(100, token); // 100ms debounce
-                    if (!token.IsCancellationRequested) _mediaPlayerService.ChangeVolume(newVolume);
+                    if (!token.IsCancellationRequested) _audioPlayerService.ChangeVolume(newVolume);
                 }
                 catch (TaskCanceledException)
                 {
@@ -71,7 +76,7 @@ public partial class MainWindow : Window
         try
         {
             var url = await FileHelper.GetFilePathDialog(GetTopLevel(this));
-            if (url != null) _filePath = Uri.UnescapeDataString(url.AbsolutePath);
+            // if (url != null) _filePath = Uri.UnescapeDataString(url.AbsolutePath);
         }
         catch (Exception exception)
         {

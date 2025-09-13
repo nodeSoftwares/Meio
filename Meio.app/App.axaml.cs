@@ -9,7 +9,7 @@ namespace Meio.app;
 
 public class App : Application
 {
-    public static ILoggerFactory? LoggerFactory { get; private set; }
+    private static ILoggerFactory? LoggerFactory { get; set; }
 
     public static ILogger<App>? Logger { get; private set; }
 

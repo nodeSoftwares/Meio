@@ -5,13 +5,13 @@ using Microsoft.Extensions.Logging;
 
 namespace Meio.app.Services;
 
-public class MediaPlayerService
+public class AudioPlayerService
 {
     // ReSharper disable once InconsistentNaming
     private readonly LibVLC _libVLC;
     private readonly MediaPlayer _mediaPlayer;
 
-    public MediaPlayerService()
+    public AudioPlayerService()
     {
         try
         {
@@ -23,7 +23,7 @@ public class MediaPlayerService
         {
             App.Logger!.LogCritical("{Exception}.", ex);
             App.Logger!.LogInformation(
-                "!! READ THIS !!\n If you are on a linux host, please make sure you have installed the libvlc library.");
+                "!! READ THIS !!\n If you are on a linux host, please make sure you have installed the libvlc library, you will not be able to read any audio otherwise !!!");
             Environment.Exit(-1);
         }
     }
@@ -34,9 +34,36 @@ public class MediaPlayerService
     /// <param name="audioFilePath">Audio file path.</param>
     public void Play(string audioFilePath)
     {
-        var media = new Media(_libVLC, audioFilePath);
-        _mediaPlayer.Play(media);
-        App.Logger!.LogDebug("Playing media file{AudioFilePath} .", audioFilePath);
+        try
+        {
+            var media = new Media(_libVLC, audioFilePath);
+
+            _mediaPlayer.Play(media);
+            App.Logger!.LogDebug("Playing media file {AudioFilePath} .", audioFilePath);
+        }
+        catch (Exception e)
+        {
+            App.Logger?.LogError("{exception}", e);
+        }
+    }
+
+    /// <summary>
+    ///     Starts playing the given audio file.
+    /// </summary>
+    /// <param name="audioUri">Audio file Uri.</param>
+    public void Play(Uri audioUri)
+    {
+        try
+        {
+            var media = new Media(_libVLC, audioUri.AbsolutePath, FromType.FromLocation);
+
+            _mediaPlayer.Play(media);
+            App.Logger!.LogDebug("Playing media file from url {AudioFilePath} .", audioUri.AbsolutePath);
+        }
+        catch (Exception e)
+        {
+            App.Logger?.LogError("{exception}", e);
+        }
     }
 
     /// <summary>
