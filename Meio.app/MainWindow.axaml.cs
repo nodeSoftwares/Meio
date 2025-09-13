@@ -76,7 +76,7 @@ public partial class MainWindow : Window
         try
         {
             var url = await FileHelper.GetFilePathDialog(GetTopLevel(this));
-            // if (url != null) _filePath = Uri.UnescapeDataString(url.AbsolutePath);
+            if (url != null) _filePath = Uri.UnescapeDataString(url.AbsolutePath);
         }
         catch (Exception exception)
         {
