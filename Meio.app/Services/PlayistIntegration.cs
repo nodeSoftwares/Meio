@@ -1,34 +1,39 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+#if ANDROID || IOS
+using Microsoft.Maui.Storage; // Needed for FileSystem.AppDataDirectory
+#endif
 
 namespace Meio.app.Services
 {
     /// <summary>
     /// Represents a single audio track inside a playlist.
-    /// It contains both the file path and the extracted metadata.
+    /// Contains the file path and its extracted metadata.
     /// </summary>
     public class Track
     {
-        public string FilePath { get; set; }      // Absolute path of the audio file
-        public MetadataInfo Metadata { get; set; } // Metadata loaded from the file (title, artist, etc.)
+        public string FilePath { get; set; }      // Absolute path to the file
+        public MetadataInfo Metadata { get; set; } // Metadata loaded via TagLib
     }
 
     /// <summary>
-    /// Represents a playlist, which is basically a collection of tracks with a name.
+    /// A playlist is just a collection of tracks with a name.
     /// </summary>
     public class Playlist
     {
-        public string Name { get; set; }           // Playlist name (e.g. "My Favorites")
-        public List<Track> Tracks { get; set; } = new(); // List of tracks in this playlist
+        public string Name { get; set; }             // Playlist name
+        public List<Track> Tracks { get; set; } = new();
     }
 
     /// <summary>
-    /// Manages multiple playlists: creation, adding tracks, saving and loading.
+    /// Service responsible for managing playlists:
+    /// creation, adding tracks, saving and loading.
     /// </summary>
     public class PlaylistManager
     {
-        private readonly List<Playlist> _playlists = new(); // Internal storage of playlists
+        private readonly List<Playlist> _playlists = new(); // Internal collection of playlists
 
         /// <summary>
         /// Returns all currently loaded playlists (read-only).
@@ -47,13 +52,11 @@ namespace Meio.app.Services
 
         /// <summary>
         /// Adds a new audio file to an existing playlist.
-        /// Metadata is automatically extracted using AudioMetadataService.
+        /// Automatically extracts metadata using AudioMetadataService.
         /// </summary>
-        /// <param name="playlist">Target playlist</param>
-        /// <param name="filePath">Absolute path of the audio file</param>
         public void AddTrackToPlaylist(Playlist playlist, string filePath)
         {
-            if (!File.Exists(filePath)) return; // Ensure the file exists
+            if (!File.Exists(filePath)) return;
 
             var metadata = AudioMetadataService.LoadMetadata(filePath);
             if (metadata != null)
@@ -67,25 +70,46 @@ namespace Meio.app.Services
         }
 
         /// <summary>
-        /// Saves a playlist as a JSON file.
-        /// This makes it persistent and easy to reload later.
+        /// Builds a cross-platform path for saving playlists.
+        /// - On Windows/Linux/macOS: uses the user's Music folder
+        /// - On Android/iOS: uses FileSystem.AppDataDirectory
         /// </summary>
-        public void SavePlaylist(Playlist playlist, string filePath)
+        private string GetPlaylistStoragePath(string playlistName)
         {
+#if ANDROID || IOS
+            return Path.Combine(FileSystem.AppDataDirectory, $"{playlistName}.json");
+#else
+            string musicFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
+            return Path.Combine(musicFolder, $"{playlistName}.json");
+#endif
+        }
+
+        /// <summary>
+        /// Saves a playlist as a JSON file in a cross-platform safe location.
+        /// </summary>
+        public void SavePlaylist(Playlist playlist)
+        {
+            string filePath = GetPlaylistStoragePath(playlist.Name);
+
             var json = JsonSerializer.Serialize(
                 playlist,
-                new JsonSerializerOptions { WriteIndented = true } // Makes the JSON human-readable
+                new JsonSerializerOptions { WriteIndented = true } // Human-readable
             );
 
             File.WriteAllText(filePath, json);
         }
 
         /// <summary>
-        /// Loads a playlist from a JSON file.
-        /// The playlist is also added to the manager's internal collection.
+        /// Loads a playlist from storage.
+        /// Works with both desktop (Music folder) and mobile (AppDataDirectory).
         /// </summary>
-        public Playlist LoadPlaylist(string filePath)
+        public Playlist LoadPlaylist(string playlistName)
         {
+            string filePath = GetPlaylistStoragePath(playlistName);
+
+            if (!File.Exists(filePath))
+                throw new FileNotFoundException($"Playlist {playlistName} not found.", filePath);
+
             var json = File.ReadAllText(filePath);
             var playlist = JsonSerializer.Deserialize<Playlist>(json);
 
@@ -96,26 +120,3 @@ namespace Meio.app.Services
         }
     }
 }
-
-/*
-Exemple of usage : 
-var manager = new PlaylistManager();
-   
-   // Create a new playlist
-   var myPlaylist = manager.CreatePlaylist("My Favorite Songs");
-   
-   // Add audio tracks
-   manager.AddTrackToPlaylist(myPlaylist, @"C:\Music\song1.mp3");
-   manager.AddTrackToPlaylist(myPlaylist, @"C:\Music\song2.flac");
-   
-   // Save the playlist to disk (as JSON)
-   manager.SavePlaylist(myPlaylist, @"C:\Playlists\my_playlist.json");
-   
-   // Load the playlist back from disk
-   var loaded = manager.LoadPlaylist(@"C:\Playlists\my_playlist.json");
-   
-   // Print all track titles and artists
-   foreach (var track in loaded.Tracks)
-   {
-       Console.WriteLine($"{track.Metadata.Title} - {string.Join(", ", track.Metadata.Artists ?? new string[]{})}");
-   } */
