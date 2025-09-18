@@ -20,12 +20,12 @@ public partial class MainWindow : Window
 
     private void Profile_OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
-        App.Logger!.LogInformation("Profile_OnPointerPressed");
+        App.Logger!.LogTrace("Profile_OnPointerPressed");
     }
 
     private void SettingsItem_OnClick(object? sender, RoutedEventArgs e)
     {
-        App.Logger!.LogInformation("SettingsItem_OnClick");
+        App.Logger!.LogTrace("SettingsItem_OnClick");
     }
 
     private void QuitItem_OnClick(object? sender, RoutedEventArgs e)
@@ -36,7 +36,7 @@ public partial class MainWindow : Window
 
     private void Menu_OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
-        App.Logger!.LogInformation("Menu_OnPointerPressed");
+        App.Logger!.LogTrace("Menu_OnPointerPressed");
 
         // Only trigger on left-click
         if (!e.GetCurrentPoint((Visual)sender!).Properties.IsLeftButtonPressed) return;
@@ -48,6 +48,8 @@ public partial class MainWindow : Window
 
     private void ToggleThemeItem_OnClick(object? sender, RoutedEventArgs e)
     {
+        App.Logger!.LogTrace("ToggleThemeItem_OnClick");
+
         if (_debounce) (Application.Current as App)?.SwitchToLight();
         else (Application.Current as App)?.SwitchToDark();
     }

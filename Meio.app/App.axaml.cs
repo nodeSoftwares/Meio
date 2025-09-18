@@ -55,6 +55,7 @@ public class App : Application
         Styles.Clear();
         Styles.Add(_style);
         Styles.Add(_lightStyle);
+        Logger!.LogDebug("Changed application theme to light theme");
     }
 
     public void SwitchToDark()
@@ -62,6 +63,7 @@ public class App : Application
         Styles.Clear();
         Styles.Add(_style);
         Styles.Add(_darkStyle);
+        Logger!.LogDebug("Changed application theme to dark theme");
     }
 
     public override void OnFrameworkInitializationCompleted()
