@@ -1,0 +1,13 @@
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Primary Colors -->
+    <Color x:Key="PrimaryAccentColor">#FFA83939</Color>
+    <Color x:Key="SecondaryAccentColor">#FFFFCACA</Color>
+    <Color x:Key="MenuColor">#193D3D3D</Color>
+
+    <!-- Brushes (optional: convert colors to brushes for use in controls) -->
+    <SolidColorBrush x:Key="PrimaryAccentBrush" Color="{StaticResource PrimaryAccentColor}" />
+    <SolidColorBrush x:Key="SecondaryAccentBrush" Color="{StaticResource SecondaryAccentColor}" />
+    <SolidColorBrush x:Key="MenuColorBrush" Color="{StaticResource MenuColor}" />
+</ResourceDictionary>

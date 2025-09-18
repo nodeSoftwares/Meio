@@ -6,6 +6,7 @@
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+        <AssemblyName>Meio.app</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>
@@ -18,10 +19,28 @@
             <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
             <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
         </PackageReference>
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0"/>
         <PackageReference Include="LibVLCSharp" Version="3.9.4"/>
         <PackageReference Include="PrettyLogging.Console" Version="1.0.3"/>
+        <PackageReference Include="Svg.Controls.Skia.Avalonia" Version="11.3.0.4"/>
         <PackageReference Include="TagLibSharp" Version="2.3.0"/>
         <PackageReference Include="VideoLAN.LibVLC.Mac" Version="3.1.3.1"/>
         <PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.21"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <AvaloniaXaml Remove="Resources\**\*"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <AvaloniaResource Include="Assets\**\*"/>
+        <AvaloniaResource Include="Resources\**\*"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="Views\MainWindow.axaml.cs">
+            <DependentUpon>MainWindow.axaml</DependentUpon>
+            <SubType>Code</SubType>
+        </Compile>
     </ItemGroup>
 </Project>
