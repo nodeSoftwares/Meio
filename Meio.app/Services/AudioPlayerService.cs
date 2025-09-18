@@ -2,6 +2,7 @@ using System;
 using Avalonia.Threading;
 using LibVLCSharp.Shared;
 using Microsoft.Extensions.Logging;
+
 // ReSharper disable UnusedMember.Global
 
 namespace Meio.app.Services;

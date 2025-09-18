@@ -1,0 +1,55 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1366" d:DesignHeight="768"
+        x:Class="Meio.app.Views.MainWindow"
+        Background="{DynamicResource BackgroundBrush}"
+        Title="Meio">
+
+
+    <Window.Resources>
+
+    </Window.Resources>
+
+    <Grid ColumnDefinitions="Auto,*">
+        <Border Classes="Menu" Width="120" VerticalAlignment="Stretch"
+                CornerRadius="0, 20, 20, 0"> <!--Left Bar-->
+            <StackPanel Spacing="30">
+                <StackPanel Margin="10" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10"> <!--Profile and menu-->
+                    <Ellipse Name="Profile" PointerPressed="Profile_OnPointerPressed" Width="50" Height="50"
+                             Fill="{DynamicResource PrimaryAccentColor}">
+                        <Ellipse.Effect>
+                            <DropShadowEffect Color="Black" OffsetY="4" Opacity="0.25" />
+                        </Ellipse.Effect>
+                    </Ellipse>
+
+                    <Svg Classes="Icon" Name="Menu" Path="avares://Meio.App/Assets/hamburger_md.svg"
+                         PointerPressed="Menu_OnPointerPressed" Width="36" Height="36">
+                        <Svg.Effect>
+                            <DropShadowEffect Color="Black" OffsetY="4" Opacity="0.25" />
+                        </Svg.Effect>
+                        <Svg.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Name="ToggleThemeItem" Header="Toggle Theme" Click="ToggleThemeItem_OnClick" />
+                                <MenuItem Name="SettingsItem" Header="Settings" Click="SettingsItem_OnClick" />
+                                <MenuItem Name="QuitItem" Header="Quit Application" Click="QuitItem_OnClick" />
+                            </ContextMenu>
+                        </Svg.ContextMenu>
+                    </Svg>
+                </StackPanel><!--/Profile and menu-->
+
+                <!--<StackPanel Spacing="14"> 
+                    <Border Classes="playlistCard" />
+                    <Border Classes="playlistCard" />
+                    <Border Classes="playlistCard" />
+                    <Border Classes="playlistCard" />
+                    <Border Classes="playlistCard" />
+                    <Border Classes="playlistCard" />
+                    <Border Classes="playlistCard" />
+                </StackPanel> -->
+            </StackPanel>
+        </Border> <!--/Left Bar-->
+    </Grid>
+
+</Window>
