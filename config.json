@@ -1,0 +1,6 @@
+{
+  "DiscordClientId": "1415069890766704700",
+  "UpdateInterval": 3000,
+  "ChromeExtensionPort": 1337,
+  "CachePath": "%LocalAppData%\\YouTubeMusicRPC"
+}
