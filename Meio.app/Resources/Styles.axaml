@@ -1,0 +1,41 @@
+<Styles xmlns="https://github.com/avaloniaui">
+    <Style Selector="Border.playlistCard">
+        <Setter Property="Width" Value="80" />
+        <Setter Property="Height" Value="80" />
+        <Setter Property="Background" Value="{DynamicResource SecondaryAccentColor}" />
+        <Setter Property="CornerRadius" Value="16" />
+        <Setter Property="BoxShadow" Value="1 4 4 0 #4F000000" />
+    </Style>
+
+    <Style Selector="Border.Menu">
+        <Setter Property="Background" Value="{DynamicResource MenuColor}" />
+        <Setter Property="BoxShadow" Value="0 4 32 0 #4F000000" />
+    </Style>
+
+    <Style Selector="Path.Icon">
+        <Setter Property="Fill" Value="{DynamicResource IconBrush}" />
+    </Style>
+
+    <Style Selector="Path.IconWhiteInvariant">
+        <Setter Property="Fill" Value="{DynamicResource IconWhiteBrush}" />
+    </Style>
+
+    <Style Selector="Path.IconBlackInvariant">
+        <Setter Property="Fill" Value="{DynamicResource IconBlackBrush}" />
+    </Style>
+
+    <Style Selector="Path.IconSecondary">
+        <Setter Property="Fill" Value="{DynamicResource PrimaryAccentBrush}" />
+    </Style>
+
+    <Style Selector="TextBlock.PageTitle">
+        <Setter Property="FontSize" Value="50" />
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+
+    <Style Selector="Canvas.IconCanvas">
+        <Setter Property="Effect">
+            <DropShadowEffect Color="Black" OffsetY="4" Opacity="0.25" />
+        </Setter>
+    </Style>
+</Styles>

@@ -5,8 +5,22 @@
     <Color x:Key="PrimaryAccentColor">#FFA83939</Color>
     <Color x:Key="SecondaryAccentColor">#FFFFCACA</Color>
     <Color x:Key="MenuColor">#193D3D3D</Color>
+    <Color x:Key="IconWhiteColor">#E0E0E0</Color>
+    <Color x:Key="IconBlackColor">#101010</Color>
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Light">
+            <SolidColorBrush x:Key="BackgroundBrush">#E0E0E0</SolidColorBrush>
+            <SolidColorBrush x:Key="IconBrush" Color="{StaticResource IconBlackColor}" />
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Dark">
+            <SolidColorBrush x:Key="BackgroundBrush">#1C1C1C</SolidColorBrush>
+            <SolidColorBrush x:Key="IconBrush" Color="{StaticResource IconWhiteColor}" />
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
 
     <!-- Brushes (optional: convert colors to brushes for use in controls) -->
+    <SolidColorBrush x:Key="IconWhiteBrush" Color="{StaticResource IconWhiteColor}" />
+    <SolidColorBrush x:Key="IconBlackBrush" Color="{StaticResource IconBlackColor}" />
     <SolidColorBrush x:Key="PrimaryAccentBrush" Color="{StaticResource PrimaryAccentColor}" />
     <SolidColorBrush x:Key="SecondaryAccentBrush" Color="{StaticResource SecondaryAccentColor}" />
     <SolidColorBrush x:Key="MenuColorBrush" Color="{StaticResource MenuColor}" />

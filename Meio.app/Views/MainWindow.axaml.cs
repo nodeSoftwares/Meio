@@ -3,19 +3,29 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Styling;
+using Meio.app.Services;
 using Microsoft.Extensions.Logging;
 
 namespace Meio.app.Views;
 
 public partial class MainWindow : Window
 {
-    private readonly bool _debounce;
+    private readonly NavigationService _navigationService;
+    private bool _debounce;
 
     public MainWindow()
     {
         _debounce = false;
         InitializeComponent();
-        // TODO: page NavigationService
+
+        _navigationService = new NavigationService(SetPage);
+        _navigationService.Navigate<HomeView>(); // Set the homepage by default.
+    }
+
+    public void SetPage(UserControl page)
+    {
+        MainContent.Content = page;
     }
 
     private void Profile_OnPointerPressed(object? sender, PointerPressedEventArgs e)
@@ -26,6 +36,7 @@ public partial class MainWindow : Window
     private void SettingsItem_OnClick(object? sender, RoutedEventArgs e)
     {
         App.Logger!.LogTrace("SettingsItem_OnClick");
+        _navigationService.Navigate<SettingsView>();
     }
 
     private void QuitItem_OnClick(object? sender, RoutedEventArgs e)
@@ -40,8 +51,8 @@ public partial class MainWindow : Window
 
         // Only trigger on left-click
         if (!e.GetCurrentPoint((Visual)sender!).Properties.IsLeftButtonPressed) return;
-        if (sender is not Avalonia.Svg.Skia.Svg { ContextMenu: { } menu } svg) return;
-        menu.PlacementTarget = svg;
+        if (sender is not Canvas { ContextMenu: { } menu } canvas) return;
+        menu.PlacementTarget = canvas;
         menu.Placement = PlacementMode.RightEdgeAlignedTop; // Menu-style position
         menu.Open();
     }
@@ -50,7 +61,28 @@ public partial class MainWindow : Window
     {
         App.Logger!.LogTrace("ToggleThemeItem_OnClick");
 
-        if (_debounce) (Application.Current as App)?.SwitchToLight();
-        else (Application.Current as App)?.SwitchToDark();
+        RequestedThemeVariant = _debounce ? ThemeVariant.Light : ThemeVariant.Dark;
+        _debounce = !_debounce;
+    }
+
+    private void MenuBar_OnPointerEntered(object? sender, PointerEventArgs e)
+    {
+        MenuBar.Width += 100;
+    }
+
+    private void MenuBar_OnPointerExited(object? sender, PointerEventArgs e)
+    {
+        MenuBar.Width -= 100;
+    }
+
+    private void HomeItem_OnClick(object? sender, RoutedEventArgs e)
+    {
+        App.Logger!.LogTrace("HomeItem_OnClick");
+        _navigationService.Navigate<HomeView>();
+    }
+
+    private void InputElement_OnPointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        _navigationService.Navigate<PlaylistView>();
     }
 }

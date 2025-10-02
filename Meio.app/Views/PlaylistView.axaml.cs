@@ -4,16 +4,16 @@ using Microsoft.Extensions.Logging;
 
 namespace Meio.app.Views;
 
-public partial class SettingsView : UserControl, INavigable
+public partial class PlaylistView : UserControl, INavigable
 {
-    public SettingsView()
+    public PlaylistView()
     {
         InitializeComponent();
     }
 
-
     public void OnNavigateTo(object? parameter)
     {
-        App.Logger!.LogTrace("Navigated to the settings page.");
+        App.Logger!.LogTrace("Navigated to the playlist page.");
+        // TODO
     }
 }

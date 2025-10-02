@@ -6,50 +6,53 @@
         x:Class="Meio.app.Views.MainWindow"
         Background="{DynamicResource BackgroundBrush}"
         Title="Meio">
+    <Grid>
+        <ContentControl Name="MainContent" ZIndex="0" />
 
-
-    <Window.Resources>
-
-    </Window.Resources>
-
-    <Grid ColumnDefinitions="Auto,*">
-        <Border Classes="Menu" Width="120" VerticalAlignment="Stretch"
+        <Border Name="MenuBar" Classes="Menu" Width="120" VerticalAlignment="Stretch" HorizontalAlignment="Left"
+                ZIndex="1"
+                PointerEntered="MenuBar_OnPointerEntered" PointerExited="MenuBar_OnPointerExited"
                 CornerRadius="0, 20, 20, 0"> <!--Left Bar-->
             <StackPanel Spacing="30">
-                <StackPanel Margin="10" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10"> <!--Profile and menu-->
+                <StackPanel Margin="10" Orientation="Horizontal" HorizontalAlignment="Left" Spacing="10"> <!--Profile and menu-->
                     <Ellipse Name="Profile" PointerPressed="Profile_OnPointerPressed" Width="50" Height="50"
                              Fill="{DynamicResource PrimaryAccentColor}">
                         <Ellipse.Effect>
                             <DropShadowEffect Color="Black" OffsetY="4" Opacity="0.25" />
                         </Ellipse.Effect>
                     </Ellipse>
-
-                    <Svg Classes="Icon" Name="Menu" Path="avares://Meio.App/Assets/hamburger_md.svg"
-                         PointerPressed="Menu_OnPointerPressed" Width="36" Height="36">
-                        <Svg.Effect>
-                            <DropShadowEffect Color="Black" OffsetY="4" Opacity="0.25" />
-                        </Svg.Effect>
-                        <Svg.ContextMenu>
+                    <Canvas Width="36" Height="36"
+                            Background="Transparent"
+                            PointerPressed="Menu_OnPointerPressed">
+                        <Canvas.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Name="ToggleThemeItem" Header="Toggle Theme" Click="ToggleThemeItem_OnClick" />
-                                <MenuItem Name="SettingsItem" Header="Settings" Click="SettingsItem_OnClick" />
-                                <MenuItem Name="QuitItem" Header="Quit Application" Click="QuitItem_OnClick" />
+                                <MenuItem Header="Home" Click="HomeItem_OnClick" />
+                                <MenuItem Header="Toggle Theme" Click="ToggleThemeItem_OnClick" />
+                                <MenuItem Header="Settings" Click="SettingsItem_OnClick" />
+                                <MenuItem Header="Quit Application" Click="QuitItem_OnClick" />
                             </ContextMenu>
-                        </Svg.ContextMenu>
-                    </Svg>
+                        </Canvas.ContextMenu>
+                        <Path Classes="Icon"
+                              Data="M7.5 25.5H28.5 M7.5 18H28.5 M7.5 10.5H28.5"
+                              StrokeThickness="2">
+                            <Path.Effect>
+                                <DropShadowEffect Color="Black" OffsetY="4" Opacity="0.25" />
+                            </Path.Effect>
+                        </Path>
+                    </Canvas>
+
                 </StackPanel><!--/Profile and menu-->
 
-                <!--<StackPanel Spacing="14"> 
+                <StackPanel Margin="15" Spacing="14" HorizontalAlignment="Left">
+                    <Border Classes="playlistCard" PointerPressed="InputElement_OnPointerPressed" />
                     <Border Classes="playlistCard" />
                     <Border Classes="playlistCard" />
                     <Border Classes="playlistCard" />
                     <Border Classes="playlistCard" />
                     <Border Classes="playlistCard" />
                     <Border Classes="playlistCard" />
-                    <Border Classes="playlistCard" />
-                </StackPanel> -->
+                </StackPanel>
             </StackPanel>
         </Border> <!--/Left Bar-->
     </Grid>
-
 </Window>
