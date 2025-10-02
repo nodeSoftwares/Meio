@@ -1,7 +1,9 @@
+using System.IO;
 using Microsoft.Extensions.Logging;
 using TagLib;
+using File = TagLib.File;
 
-namespace Meio.app.Services;
+namespace Meio.Api.Services;
 
 public class MetadataInfo
 {
@@ -32,13 +34,13 @@ public static class AudioMetadataService
             var file = File.Create(filePath);
             var tag = file.Tag;
 
-            App.Logger?.LogDebug("Asked for the metadata of {filePath}.", filePath);
-            App.Logger?.LogTrace("Title: {tagTitle}", tag.Title);
-            App.Logger?.LogTrace("Artists: {tagArtists}", string.Join(", ", tag.AlbumArtists));
-            App.Logger?.LogTrace("Album: {tagAlbum}", tag.Album);
-            App.Logger?.LogTrace("Year: {tagYear}", tag.Year);
-            App.Logger?.LogTrace("Genre: {tagGenres}", string.Join(", ", tag.Genres));
-            App.Logger?.LogTrace(tag.Pictures.Length > 0 ? "Got an album art." : "No album art was found.");
+            Api.Logger?.LogDebug("Asked for the metadata of {filePath}.", filePath);
+            Api.Logger?.LogTrace("Title: {tagTitle}", tag.Title);
+            Api.Logger?.LogTrace("Artists: {tagArtists}", string.Join(", ", tag.AlbumArtists));
+            Api.Logger?.LogTrace("Album: {tagAlbum}", tag.Album);
+            Api.Logger?.LogTrace("Year: {tagYear}", tag.Year);
+            Api.Logger?.LogTrace("Genre: {tagGenres}", string.Join(", ", tag.Genres));
+            Api.Logger?.LogTrace(tag.Pictures.Length > 0 ? "Got an album art." : "No album art was found.");
 
             return new MetadataInfo
             {
@@ -52,12 +54,17 @@ public static class AudioMetadataService
         }
         catch (CorruptFileException corruptFileException)
         {
-            App.Logger?.LogError(corruptFileException, "Failed to load metadata. File is corrupted.");
+            Api.Logger?.LogError(corruptFileException, "Failed to load metadata. File is corrupted.");
             return null;
         }
         catch (UnsupportedFormatException unsupportedFormatException)
         {
-            App.Logger?.LogError(unsupportedFormatException, "Failed to load metadata. File format is unsupported.");
+            Api.Logger?.LogError(unsupportedFormatException, "Failed to load metadata. File format is unsupported.");
+            return null;
+        }
+        catch (FileNotFoundException fileNotFoundException)
+        {
+            Api.Logger?.LogError(fileNotFoundException, "Failed to load metadata. File not found.");
             return null;
         }
     }

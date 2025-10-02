@@ -1,0 +1,27 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Meio.app.MainWindow"
+        Title="Meio">
+    <Grid ColumnDefinitions="Auto,Auto,*" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel VerticalAlignment="Center">
+            <Slider Name="VolumeSlider" Orientation="Vertical" Height="100" Maximum="30"
+                    ValueChanged="VolumeSlider_OnValueChanged" />
+            <TextBlock Name="VolumeText" HorizontalAlignment="Center" Text="Volume" />
+        </StackPanel>
+        <StackPanel Grid.Column="1" VerticalAlignment="Center" Width="350">
+            <TextBlock HorizontalAlignment="Center">Currently reading</TextBlock>
+            <Image Name="AlbumArtImage" Width="200" Height="200" />
+            <Border Margin="5" CornerRadius="10" Background="LightCoral">
+                <TextBlock Name="CurrentMusicText" Margin="5" HorizontalAlignment="Center" FontSize="24" Text="Nothing" />
+            </Border>
+            <Button Name="UploadButton" HorizontalAlignment="Center" Click="UploadButton_OnClick" Content="Upload song" />
+            <Button Name="PlayButton" HorizontalAlignment="Center" Click="Button_OnClick" Content="Play" />
+
+        </StackPanel>
+
+    </Grid>
+
+</Window>
