@@ -43,7 +43,7 @@ public class Api
         Logger.LogInformation("Meio API started.");
     }
 
-    public static void Main(string[] args)
+    public static void Main()
     {
         Init();
     }

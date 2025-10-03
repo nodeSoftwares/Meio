@@ -7,17 +7,17 @@ namespace Meio.Api.Services;
 
 public class MetadataInfo
 {
-    public string? Title { get; set; }
+    public string? Title { get; init; }
 
-    public string[]? Artists { get; set; }
+    public string[]? Artists { get; init; }
 
-    public string? Album { get; set; }
+    public string? Album { get; init; }
 
-    public uint Year { get; set; }
+    public uint Year { get; init; }
 
-    public string[]? Genres { get; set; }
+    public string[]? Genres { get; init; }
 
-    public byte[]? AlbumArt { get; set; }
+    public byte[]? AlbumArt { get; init; }
 }
 
 public static class AudioMetadataService
@@ -34,7 +34,7 @@ public static class AudioMetadataService
             var file = File.Create(filePath);
             var tag = file.Tag;
 
-            Api.Logger?.LogDebug("Asked for the metadata of {filePath}.", filePath);
+            Api.Logger?.LogDebug("Current metadata of {filePath}.", filePath);
             Api.Logger?.LogTrace("Title: {tagTitle}", tag.Title);
             Api.Logger?.LogTrace("Artists: {tagArtists}", string.Join(", ", tag.AlbumArtists));
             Api.Logger?.LogTrace("Album: {tagAlbum}", tag.Album);

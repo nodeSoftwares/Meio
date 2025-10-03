@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Meio.Api.Services;
 
-public class AudioPlayerService
+public class AudioPlayerService : IDisposable
 {
     // ReSharper disable once InconsistentNaming
     private readonly LibVLC _libVLC;
@@ -30,6 +30,24 @@ public class AudioPlayerService
     }
 
     /// <summary>
+    ///     To be called when done using.
+    /// </summary>
+    public void Dispose()
+    {
+        _mediaPlayer.Stop(); // Make sure it stops first to avoid potential unwanted behaviour.
+        _mediaPlayer.Dispose();
+        Api.Logger!.LogTrace("Disposed media player.");
+
+        _libVLC.Dispose();
+        Api.Logger!.LogTrace("Disposed libVLC.");
+
+        GC.SuppressFinalize(this); // Dispose AudioPlayerService.
+        Api.Logger!.LogDebug("Disposed.");
+
+        Environment.Exit(0); // Exit after this.
+    }
+
+    /// <summary>
     ///     Starts playing the given audio file.
     /// </summary>
     /// <param name="audioFilePath">Audio file path.</param>
@@ -37,6 +55,12 @@ public class AudioPlayerService
     {
         try
         {
+            if (_mediaPlayer.IsPlaying)
+            {
+                Api.Logger!.LogError("An audio file is already being played. Please stop it first.");
+                return;
+            }
+
             var media = new Media(_libVLC, audioFilePath);
 
             _mediaPlayer.Play(media);
@@ -56,6 +80,12 @@ public class AudioPlayerService
     {
         try
         {
+            if (_mediaPlayer.IsPlaying)
+            {
+                Api.Logger!.LogError("An audio file is already being played. Please stop it first.");
+                return;
+            }
+
             var media = new Media(_libVLC, audioUri.AbsolutePath, FromType.FromLocation);
 
             _mediaPlayer.Play(media);
@@ -63,7 +93,7 @@ public class AudioPlayerService
         }
         catch (Exception e)
         {
-            Api.Logger?.LogError("An error occured trying to play the audio file. {e}", e.Message);
+            Api.Logger?.LogError("An error occured trying to play the audio file from url. {e}", e.Message);
         }
     }
 
@@ -72,7 +102,13 @@ public class AudioPlayerService
     /// </summary>
     public void Stop()
     {
+        if (!_mediaPlayer.IsPlaying)
+        {
+            Api.Logger!.LogError("Cannot stop the media player. No media is playing.");
+        }
+
         _mediaPlayer.Stop();
+        _mediaPlayer.Media?.Dispose();
         Api.Logger!.LogDebug("Stopped media player.");
     }
 
@@ -103,6 +139,23 @@ public class AudioPlayerService
     }
 
     /// <summary>
+    ///     Changes the playback speed of the current playing media.
+    /// </summary>
+    /// <param name="speed">New playback speed.</param>
+    public void ChangePlaybackSpeed(float speed)
+    {
+        if (!_mediaPlayer.IsPlaying)
+        {
+            Api.Logger!.LogError("Cannot change audio rate, no media is playing.");
+        }
+        else
+        {
+            _mediaPlayer.SetRate(speed);
+            Api.Logger!.LogTrace("Changed audio rate to {Speed}.", speed);
+        }
+    }
+
+    /// <summary>
     ///     Mute the current reading audio file.
     /// </summary>
     public void Mute()
@@ -117,6 +170,6 @@ public class AudioPlayerService
     public void Unmute()
     {
         _mediaPlayer.Mute = false;
-        Api.Logger!.LogDebug("Unmuted media.");
+        Api.Logger!.LogDebug("Unuted media.");
     }
 }
