@@ -26,4 +26,20 @@
     <ItemGroup>
         <ProjectReference Include="..\Meio.Api\Meio.Api.csproj"/>
     </ItemGroup>
+
+    <ItemGroup>
+        <AvaloniaXaml Remove="Resources\**\*"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <AvaloniaResource Include="Assets\**\*"/>
+        <AvaloniaResource Include="Resources\**\*"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="Views\MainWindow.axaml.cs">
+            <DependentUpon>MainWindow.axaml</DependentUpon>
+            <SubType>Code</SubType>
+        </Compile>
+    </ItemGroup>
 </Project>

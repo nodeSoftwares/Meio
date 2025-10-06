@@ -4,6 +4,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Styling;
+using Meio.Api.Services;
 using Meio.app.Services;
 using Microsoft.Extensions.Logging;
 
