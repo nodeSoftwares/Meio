@@ -6,7 +6,7 @@
              x:Class="Meio.app.Views.PlaylistView">
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Image Height="350" Stretch="UniformToFill" HorizontalAlignment="Stretch" VerticalAlignment="Top"
-               Source="avares://Meio.app/Assets/playlistbanner.jpg">
+               Source="avares://Meio.App/Assets/playlistbanner.jpg">
             <Image.Effect>
                 <BlurEffect Radius="8" />
             </Image.Effect>
