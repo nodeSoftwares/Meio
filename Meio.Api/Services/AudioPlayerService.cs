@@ -51,24 +51,34 @@ public class AudioPlayerService : IDisposable
     ///     Starts playing the given audio file.
     /// </summary>
     /// <param name="audioFilePath">Audio file path.</param>
-    public void Play(string audioFilePath)
+    public Media? Play(string audioFilePath)
     {
         try
         {
             if (_mediaPlayer.IsPlaying)
             {
                 Api.Logger!.LogError("An audio file is already being played. Please stop it first.");
-                return;
+                return null;
             }
 
             var media = new Media(_libVLC, audioFilePath);
 
             _mediaPlayer.Play(media);
             Api.Logger!.LogInformation("Playing media file {AudioFilePath} .", audioFilePath);
+
+            _mediaPlayer.EndReached += (_, _) =>
+            {
+                Api.Logger!.LogDebug("Media playback ended.");
+                // _mediaPlayer.Stop()
+            };
+
+            return media;
         }
         catch (Exception e)
         {
             Api.Logger?.LogError("An error occured trying to play the audio file. {e}", e.Message);
+
+            return null;
         }
     }
 
@@ -76,24 +86,27 @@ public class AudioPlayerService : IDisposable
     ///     Starts playing the given audio file.
     /// </summary>
     /// <param name="audioUri">Audio file Uri.</param>
-    public void Play(Uri audioUri)
+    public Media? Play(Uri audioUri)
     {
         try
         {
             if (_mediaPlayer.IsPlaying)
             {
                 Api.Logger!.LogError("An audio file is already being played. Please stop it first.");
-                return;
+                return null;
             }
 
             var media = new Media(_libVLC, audioUri.AbsolutePath, FromType.FromLocation);
 
             _mediaPlayer.Play(media);
-            Api.Logger!.LogInformation("Playing media file from url {AudioFilePath} .", audioUri.AbsolutePath);
+            Api.Logger!.LogInformation("Playing media file from url {AudioFilePath}.", audioUri.AbsolutePath);
+
+            return media;
         }
         catch (Exception e)
         {
             Api.Logger?.LogError("An error occured trying to play the audio file from url. {e}", e.Message);
+            return null;
         }
     }
 
