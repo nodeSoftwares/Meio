@@ -5,8 +5,58 @@
              mc:Ignorable="d"
              x:Class="Meio.app.Views.SettingsView">
     <Grid ColumnDefinitions="120, Auto">
-        <Grid ColumnDefinitions="Auto, Auto" Grid.Column="1" Margin="10,10,2,0">
-            <TextBlock Classes="PageTitle" Text="Settings" />
+        <Grid RowDefinitions="Auto, Auto, *" Grid.Column="1" Margin="10,10,2,0" RowSpacing="20">
+            <TextBlock Classes="SettingsTitle" Text="Settings" />
+
+            <StackPanel Grid.Row="1">
+                <Grid RowDefinitions="Auto, Auto, Auto, *" RowSpacing="20">
+                    <StackPanel Classes="SettingsSection">
+                        <TextBlock Classes="SettingsSectionTitle">Appearance</TextBlock>
+                        <Separator />
+
+                        <StackPanel Classes="SettingsSectionChildren">
+                            <TextBlock>Theme</TextBlock>
+                            <ComboBox SelectedIndex="0">
+                                <ComboBoxItem>Default</ComboBoxItem>
+                                <ComboBoxItem>Light</ComboBoxItem>
+                                <ComboBoxItem>Dark</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Classes="SettingsSection">
+                        <TextBlock Classes="SettingsSectionTitle">Test</TextBlock>
+                        <Separator />
+
+                        <StackPanel Classes="SettingsSectionChildren">
+                            <TextBlock>Test radio</TextBlock>
+                            <RadioButton GroupName="Test">test</RadioButton>
+                            <RadioButton GroupName="Test">tests</RadioButton>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="2" Classes="SettingsSection">
+                        <TextBlock Classes="SettingsSectionTitle">Audio</TextBlock>
+                        <Separator />
+                        <StackPanel Classes="SettingsSectionChildren">
+                            <CheckBox>Normalize audio</CheckBox>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="3">
+                        <Button>Save settings</Button> <!-- TODO Accent button-->
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2">
+                <Separator />
+
+                <Border Width="128" Height="128" />
+                <TextBlock>Meio v ( | )</TextBlock> <!--TODO application version, git commit and branch-->
+                <TextBlock>License: MIT</TextBlock>
+                <TextBlock>Made with ❤️ by nodeSoftwares and its contributors</TextBlock>
+            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>

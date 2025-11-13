@@ -2,13 +2,87 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="using:Meio.app.Controls"
              mc:Ignorable="d"
              x:Class="Meio.app.Views.HomeView">
-    <Grid ColumnDefinitions="120, Auto">
-        <Grid ColumnDefinitions="Auto, Auto" Grid.Column="1" Margin="35,30,5,0">
-            <TextBlock Classes="PageTitle" FontSize="40">
-                Welcome back,<LineBreak />Evan.
-            </TextBlock>
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Auto">
+        <Grid ColumnDefinitions="120, Auto">
+            <Grid ColumnDefinitions="Auto, Auto" Grid.Column="1" Margin="35,30,5,0">
+                <Grid RowDefinitions="Auto, *" RowSpacing="50">
+                    <TextBlock Classes="HomeTitle">
+                        Welcome back,<LineBreak />Lain.
+                    </TextBlock>
+
+                    <StackPanel Grid.Row="1" Spacing="20">
+                        <StackPanel Classes="HomeSection">
+                            <TextBlock Classes="HomeSectionTitle">Header 1</TextBlock>
+                            <StackPanel Classes="HomeSectionChildren">
+                                <controls:Card
+                                    Title="Hybrid Theory"
+                                    CoverBrush="AliceBlue" />
+                                <controls:Card
+                                    Title="Alicia"
+                                    CoverBrush="Bisque" />
+                                <controls:Card
+                                    Title="Smells like teen spirit"
+                                    CoverBrush="BlueViolet" />
+                                <controls:Card
+                                    Title="Smells like teen spirit"
+                                    CoverBrush="BlueViolet" />
+                                <controls:Card
+                                    Title="Smells like teen spirit"
+                                    CoverBrush="BlueViolet" />
+                                <controls:Card
+                                    Title="Smells like teen spirit"
+                                    CoverBrush="BlueViolet" />
+                            </StackPanel>
+                            <TextBlock Classes="HomeSectionTitle">Header 2</TextBlock>
+                            <StackPanel Classes="HomeSectionChildren">
+                                <controls:Card
+                                    Title="Hybrid Theory"
+                                    CoverBrush="AliceBlue" />
+                                <controls:Card
+                                    Title="Alicia"
+                                    CoverBrush="Bisque" />
+                                <controls:Card
+                                    Title="Smells like teen spirit"
+                                    CoverBrush="BlueViolet" />
+                                <controls:Card
+                                    Title="Smells like teen spirit"
+                                    CoverBrush="BlueViolet" />
+                                <controls:Card
+                                    Title="Smells like teen spirit"
+                                    CoverBrush="BlueViolet" />
+                                <controls:Card
+                                    Title="Smells like teen spirit"
+                                    CoverBrush="BlueViolet" />
+                            </StackPanel>
+                            <TextBlock Classes="HomeSectionTitle">Header 3</TextBlock>
+                            <StackPanel Classes="HomeSectionChildren">
+                                <controls:Card
+                                    Title="Hybrid Theory"
+                                    CoverBrush="IndianRed" />
+                                <controls:Card
+                                    Title="Alicia"
+                                    CoverBrush="SeaGreen" />
+                                <controls:Card
+                                    Title="Smells like teen spirit"
+                                    CoverBrush="CadetBlue" />
+                                <controls:Card
+                                    Title="Smells like teen spirit"
+                                    CoverBrush="BlueViolet" />
+                                <controls:Card
+                                    Title="Smells like teen spirit"
+                                    CoverBrush="BlueViolet" />
+                                <controls:Card
+                                    Title="Smells like teen spirit"
+                                    CoverBrush="BlueViolet" />
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </Grid>
         </Grid>
-    </Grid>
+    </ScrollViewer>
 </UserControl>

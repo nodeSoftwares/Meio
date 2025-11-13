@@ -2,6 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="using:Meio.app.Controls"
         mc:Ignorable="d" d:DesignWidth="1366" d:DesignHeight="768"
         x:Class="Meio.app.Views.MainWindow"
         Background="{DynamicResource BackgroundBrush}"
@@ -23,7 +24,7 @@
                     </Ellipse>
                     <Canvas Width="36" Height="36"
                             Background="Transparent"
-                            PointerPressed="Menu_OnPointerPressed">
+                            PointerPressed="Menu_OnPointerPressed"> <!-- Menu -->
                         <Canvas.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Home" Click="HomeItem_OnClick" />
@@ -32,27 +33,31 @@
                                 <MenuItem Header="Quit Application" Click="QuitItem_OnClick" />
                             </ContextMenu>
                         </Canvas.ContextMenu>
-                        <Path Classes="Icon"
-                              Data="M7.5 25.5H28.5 M7.5 18H28.5 M7.5 10.5H28.5"
-                              StrokeThickness="2">
-                            <Path.Effect>
-                                <DropShadowEffect Color="Black" OffsetY="4" Opacity="0.25" />
-                            </Path.Effect>
-                        </Path>
-                    </Canvas>
 
-                </StackPanel><!--/Profile and menu-->
+                        <Svg Path="avares://Meio.app/Assets/svg/hamburger_md.svg">
+                            <Svg.Effect>
+                                <DropShadowEffect Color="#000000"
+                                                  BlurRadius="4"
+                                                  OffsetX="0"
+                                                  OffsetY="4" />
+                            </Svg.Effect>
+                        </Svg>
+                    </Canvas> <!-- /Menu -->
+                </StackPanel> <!--/Profile and menu-->
 
                 <StackPanel Margin="15" Spacing="14" HorizontalAlignment="Left">
-                    <Border Classes="playlistCard" PointerPressed="InputElement_OnPointerPressed" />
-                    <Border Classes="playlistCard" />
-                    <Border Classes="playlistCard" />
-                    <Border Classes="playlistCard" />
-                    <Border Classes="playlistCard" />
-                    <Border Classes="playlistCard" />
-                    <Border Classes="playlistCard" />
+                    <controls:PlaylistCard CoverBrush="Tomato" />
+                    <controls:PlaylistCard CoverBrush="Indigo" />
+                    <controls:PlaylistCard CoverBrush="LightGreen" />
+                    <controls:PlaylistCard CoverBrush="LightSeaGreen" />
+                    <controls:PlaylistCard CoverBrush="NavajoWhite" />
+                    <controls:PlaylistCard CoverBrush="DarkOliveGreen" />
+                    <controls:PlaylistCard CoverBrush="HotPink" />
+                    <controls:PlaylistCard CoverBrush="Azure" />
                 </StackPanel>
             </StackPanel>
         </Border> <!--/Left Bar-->
+
+        <controls:PlayingWidget HorizontalAlignment="Right" VerticalAlignment="Bottom" />
     </Grid>
 </Window>

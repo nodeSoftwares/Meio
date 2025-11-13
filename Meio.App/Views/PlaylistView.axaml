@@ -23,11 +23,10 @@
                         </StackPanel>
 
                         <StackPanel Spacing="25" Orientation="Horizontal"> <!--PlaylistButtons-->
-                            <!--TODO: Make a Tag specific for icons-->
                             <Canvas Classes="IconCanvas" Name="BannerPlaylistPlayIcon" Width="72" Height="72">
-                                <Path Classes="IconWhiteInvariant" ZIndex="1"
+                                <!-- TODO REWORK -->
+                                <Path Classes="IconWhiteInvariant" ZIndex="1" 
                                       Data="M30 36V25.6077L39 30.8038L48 36L39 41.1961L30 46.3923V36Z" />
-
                                 <Path Classes="IconSecondary"
                                       Data="M36 66C52.5686 66 66 52.5686 66 36C66 19.4315 52.5686 6 36 6C19.4315 6 6 19.4315 6 36C6 52.5686 19.4315 66 36 66Z" />
                             </Canvas>

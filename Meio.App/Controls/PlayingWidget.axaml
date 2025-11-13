@@ -1,0 +1,64 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:Meio.app.Controls">
+    <Design.PreviewWith>
+        <controls:PlayingWidget />
+    </Design.PreviewWith>
+
+    <Style Selector="controls|PlayingWidget">
+        <!-- Set Defaults -->
+        <Setter Property="Template">
+            <ControlTemplate>
+                <StackPanel>
+                    <Border Name="FloatingWidget"
+                            Width="470"
+                            Height="135"
+                            Background="{DynamicResource MenuColor}"
+                            CornerRadius="16"
+                            Margin="27"
+                            BoxShadow="0 0 4 4 #4F000000">
+                        <StackPanel Orientation="Horizontal" Spacing="27" Margin="10">
+                            <Border Width="115"
+                                    Height="115"
+                                    CornerRadius="16"
+                                    Background="{DynamicResource SecondaryAccentBrush}" />
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="225">
+                                    <StackPanel>
+                                        <TextBlock FontWeight="Bold" FontSize="24">Title</TextBlock>
+                                        <TextBlock FontWeight="Light" FontSize="12">Artist</TextBlock>
+                                    </StackPanel>
+
+                                    <Svg Path="avares://Meio.app/Assets/svg/playerWidget_spectre.svg" />
+                                </StackPanel>
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Spacing="15">
+                                        <StackPanel Spacing="6" Orientation="Horizontal">
+                                            <Svg Path="avares://Meio.app/Assets/svg/playerWidget_backward.svg" />
+                                            <Svg Path="avares://Meio.app/Assets/svg/playerWidget_play.svg" />
+                                            <Svg Path="avares://Meio.app/Assets/svg/playerWidget_forward.svg" />
+                                        </StackPanel>
+                                        <StackPanel Spacing="7" Orientation="Horizontal">
+                                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                                <Svg Path="avares://Meio.app/Assets/svg/playerWidget_shuffle.svg" />
+                                                <Svg Path="avares://Meio.app/Assets/svg/playerWidget_volume.svg" />
+                                            </StackPanel>
+                                            <ProgressBar Width="66" Height="6" Value="15" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Spacing="7">
+                                        <TextBlock>03:48</TextBlock>
+                                        <ProgressBar Value="50" Width="256" Height="6" />
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <!-- Pour le son, quand on hover la souris, ShowProgressText = True-->
+                                <!-- contenu -->
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

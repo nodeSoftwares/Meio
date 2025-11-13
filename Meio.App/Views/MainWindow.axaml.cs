@@ -4,7 +4,6 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Styling;
-using Meio.Api.Services;
 using Meio.app.Services;
 using Microsoft.Extensions.Logging;
 
@@ -22,6 +21,7 @@ public partial class MainWindow : Window
 
         _navigationService = new NavigationService(SetPage);
         _navigationService.Navigate<HomeView>(); // Set the homepage by default.
+        //SettingsImporterService.ImportSettingsFromFile("settings.json");
     }
 
     public void SetPage(UserControl page)
