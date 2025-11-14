@@ -10,6 +10,7 @@
         <Setter Property="Template">
             <ControlTemplate>
                 <TextBlock Text="Templated Control" />
+                <!-- TODO -->
             </ControlTemplate>
         </Setter>
     </Style>
