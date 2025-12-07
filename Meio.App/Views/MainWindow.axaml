@@ -8,6 +8,7 @@
         Background="{DynamicResource BackgroundBrush}"
         Title="Meio">
     <Grid>
+        <controls:Background/>
         <ContentControl Name="MainContent" ZIndex="0" />
 
         <Border Name="MenuBar" Classes="Menu" Width="120" VerticalAlignment="Stretch" HorizontalAlignment="Left"
@@ -34,14 +35,17 @@
                             </ContextMenu>
                         </Canvas.ContextMenu>
 
-                        <Svg Path="avares://Meio.app/Assets/svg/hamburger_md.svg">
-                            <Svg.Effect>
-                                <DropShadowEffect Color="#000000"
-                                                  BlurRadius="4"
-                                                  OffsetX="0"
-                                                  OffsetY="4" />
-                            </Svg.Effect>
-                        </Svg>
+                        <Border Cursor="Hand">
+                            <Svg Path="avares://Meio.app/Assets/svg/hamburger_md.svg">
+                                <Svg.Effect>
+                                    <DropShadowEffect Color="#000000"
+                                                      BlurRadius="4"
+                                                      OffsetX="0"
+                                                      OffsetY="4" />
+                                </Svg.Effect>
+                            </Svg>
+                        </Border>
+                        
                     </Canvas> <!-- /Menu -->
                 </StackPanel> <!--/Profile and menu-->
 

@@ -24,6 +24,7 @@
         <StyleInclude Source="avares://Meio.App/Controls/Card.axaml" />
         <StyleInclude Source="avares://Meio.App/Controls/PlaylistCard.axaml" />
         <StyleInclude Source="avares://Meio.App/Controls/PlayingWidget.axaml" />
+        <StyleInclude Source="avares://Meio.App/Controls/Background.axaml" />
     </Application.Styles>
     <Application.Resources>
         <ResourceDictionary>

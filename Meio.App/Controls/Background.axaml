@@ -1,0 +1,24 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:Meio.app.Controls">
+    <Design.PreviewWith>
+        <controls:Background />
+    </Design.PreviewWith>
+
+    <Style Selector="controls|Background">
+        <!-- Set Defaults -->
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Background="#1C1C1C80"
+                    ZIndex="10">
+                    <Border.Effect>
+                        <BlurEffect Radius="100"/>
+                    </Border.Effect>
+                    <Canvas x:Name="Background" />
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>
