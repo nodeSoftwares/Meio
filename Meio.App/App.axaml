@@ -5,6 +5,33 @@
     <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.Styles>
-        <FluentTheme />
+        <FluentTheme>
+            <FluentTheme.Palettes>
+                <!--<ColorPaletteResources x:Key="Light" Accent="{DynamicResource PrimaryAccentColor}"
+                                       RegionColor="{StaticResource LightBackgroundColor}"
+                                       ErrorText="{StaticResource SecondaryAccentColor}" />
+                <ColorPaletteResources x:Key="Dark" Accent="{DynamicResource PrimaryAccentColor}"
+                                       RegionColor="{StaticResource DarkBackgroundColor}"
+                                       ErrorText="{StaticResource PrimaryAccentColor}" /> TODO-->
+                <ColorPaletteResources x:Key="Light" Accent="{DynamicResource PrimaryAccentColor}" />
+                <ColorPaletteResources x:Key="Dark" Accent="{DynamicResource PrimaryAccentColor}" />
+            </FluentTheme.Palettes>
+        </FluentTheme>
+
+        <StyleInclude Source="avares://Meio.App/Resources/Styles.axaml" />
+        <StyleInclude Source="avares://Meio.App/Resources/Settings.axaml" />
+        <StyleInclude Source="avares://Meio.App/Resources/Home.axaml" />
+        <StyleInclude Source="avares://Meio.App/Controls/Card.axaml" />
+        <StyleInclude Source="avares://Meio.App/Controls/PlaylistCard.axaml" />
+        <StyleInclude Source="avares://Meio.App/Controls/PlayingWidget.axaml" />
+        <StyleInclude Source="avares://Meio.App/Controls/Background.axaml" />
     </Application.Styles>
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="avares://Meio.App/Resources/ColorPalette.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+
 </Application>
