@@ -1,0 +1,32 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style Selector="StackPanel.HomeSection">
+        <Setter Property="Spacing" Value="17" />
+    </Style>
+
+    <Style Selector="StackPanel.HomeSectionChildren">
+        <Setter Property="Orientation" Value="Horizontal" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Spacing" Value="25" />
+    </Style>
+
+    <Style Selector="StackPanel.HomeCard">
+        <Setter Property="Spacing" Value="16" />
+    </Style>
+
+    <Style Selector="TextBlock.HomeCardTitle">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+
+    <Style Selector="TextBlock.HomeTitle">
+        <Setter Property="FontSize" Value="40" />
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+    <Style Selector="TextBlock.HomeSectionTitle">
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontSize" Value="24" />
+    </Style>
+</Styles>

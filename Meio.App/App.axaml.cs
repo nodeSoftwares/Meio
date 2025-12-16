@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Meio.app.Views;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 using PrettyLogging.Console;
