@@ -48,6 +48,8 @@ public class App : Application
 
         Logger = LoggerFactory.CreateLogger<App>();
         Logger.LogInformation("Meio Application started.");
+        
+        
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {

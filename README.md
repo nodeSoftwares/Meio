@@ -11,7 +11,7 @@ Meio is a free cross-platform music player software, where you can listen the wa
 ## Features
 
 - [x]  Fully cross-compatible across platform hosts
-- [ ]  Discord RPC integration
+- [x]  Discord RPC integration
 - [ ]  Play soundcloud and youtube music and download them for offline listening
 - [x]  Play local audio music
 - [ ]  Music metadata

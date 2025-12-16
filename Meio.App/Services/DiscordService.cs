@@ -21,7 +21,7 @@ public class DiscordService : IDisposable
         try
         {
             var appId = Environment.GetEnvironmentVariable("DISCORD_APP_ID");
-            Console.WriteLine($"AppId: {appId}");
+            Console.WriteLine($"AppId: {appId}"); // TODO: Handle error when discord app id is not found
             Console.WriteLine($"Current Directory {Directory.GetCurrentDirectory()}");
 
             // Create the client and setup events.

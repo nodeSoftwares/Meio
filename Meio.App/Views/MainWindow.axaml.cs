@@ -22,6 +22,8 @@ public partial class MainWindow : Window
         _navigationService = new NavigationService(SetPage);
         _navigationService.Navigate<HomeView>(); // Set the homepage by default.
         //SettingsImporterService.ImportSettingsFromFile("settings.json");
+
+        var discordService = new DiscordService();
     }
 
     public void SetPage(UserControl page)
