@@ -1,0 +1,16 @@
+<Styles xmlns="https://github.com/avaloniaui">
+    <Style Selector="Border.Menu">
+        <Setter Property="Background" Value="{DynamicResource MenuColor}" />
+        <Setter Property="BoxShadow" Value="0 4 32 0 #4F000000" />
+    </Style>
+    
+    <Style Selector="Svg.Icon">
+        <Setter Property="Effect">
+            <DropShadowEffect Color="#000000"
+                              BlurRadius="4"
+                              OffsetX="0"
+                              OffsetY="4"
+                              Opacity="0.25"/>
+        </Setter>
+    </Style>
+</Styles>
