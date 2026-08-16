@@ -1,50 +1,45 @@
 using System;
 using LibVLCSharp.Shared;
-using Microsoft.Extensions.Logging;
+using Meio.Api.Interfaces.Services;
+using Microsoft.Extensions.Hosting;
 
 // ReSharper disable UnusedMember.Global
 
 namespace Meio.Api.Services;
 
-public class AudioPlayerService : IDisposable
+internal class AudioPlayerService : IAudioPlayerService, IDisposable
 {
     // ReSharper disable once InconsistentNaming
     private readonly LibVLC _libVLC;
+    private readonly IMeioLogger _logger;
     private readonly MediaPlayer _mediaPlayer;
 
-    public AudioPlayerService()
+    private bool _disposed;
+
+    public AudioPlayerService(IMeioLogger logger, IHostApplicationLifetime applicationLifetime)
     {
+        _logger = logger;
+
         try
         {
             _libVLC = new LibVLC();
             _mediaPlayer = new MediaPlayer(_libVLC);
-            Api.Logger!.LogDebug("Initialized AudioPlayerService.");
+
+            applicationLifetime.ApplicationStopping.Register(() =>
+            {
+                _logger.LogInformation("Application stopping, disposing AudioPlayerService...");
+                Dispose();
+            });
+
+            _logger.LogDebug("Initialized AudioPlayerService.");
         }
         catch (VLCException ex)
         {
-            Api.Logger!.LogCritical("An error occured trying to initialize AudioPlayerService. {Exception}", ex.Message);
-            Api.Logger!.LogInformation(
+            _logger.LogError("An error occured trying to initialize AudioPlayerService. {Exception}", ex.Message);
+            _logger.LogInformation(
                 "!! READ THIS !!\n If you are on a linux host, please make sure you have installed the libvlc library, you will not be able to read any audio otherwise !!!");
-            Environment.Exit(-1);
+            Dispose();
         }
-    }
-
-    /// <summary>
-    ///     To be called when done using.
-    /// </summary>
-    public void Dispose()
-    {
-        _mediaPlayer.Stop(); // Make sure it stops first to avoid potential unwanted behaviour.
-        _mediaPlayer.Dispose();
-        Api.Logger!.LogTrace("Disposed media player.");
-
-        _libVLC.Dispose();
-        Api.Logger!.LogTrace("Disposed libVLC.");
-
-        GC.SuppressFinalize(this); // Dispose AudioPlayerService.
-        Api.Logger!.LogDebug("Disposed.");
-
-        Environment.Exit(0); // Exit after this.
     }
 
     /// <summary>
@@ -53,22 +48,24 @@ public class AudioPlayerService : IDisposable
     /// <param name="audioFilePath">Audio file path.</param>
     public Media? Play(string audioFilePath)
     {
+        ObjectDisposedException.ThrowIf(_disposed, "AudioPlayerService is disposed.");
+
         try
         {
             if (_mediaPlayer.IsPlaying)
             {
-                Api.Logger!.LogError("An audio file is already being played. Please stop it first.");
+                _logger.LogError("An audio file is already being played. Please stop it first.");
                 return null;
             }
 
             var media = new Media(_libVLC, audioFilePath);
 
             _mediaPlayer.Play(media);
-            Api.Logger!.LogInformation("Playing media file {AudioFilePath} .", audioFilePath);
+            _logger.LogInformation("Playing media file {AudioFilePath} .", audioFilePath);
 
             _mediaPlayer.EndReached += (_, _) =>
             {
-                Api.Logger!.LogDebug("Media playback ended.");
+                _logger.LogDebug("Media playback ended.");
                 // _mediaPlayer.Stop()
             };
 
@@ -76,10 +73,12 @@ public class AudioPlayerService : IDisposable
         }
         catch (Exception e)
         {
-            Api.Logger?.LogError("An error occured trying to play the audio file. {e}", e.Message);
+            _logger.LogError("An error occured trying to play the audio file. {e}", e.Message);
 
             return null;
         }
+
+        throw new ObjectDisposedException(nameof(AudioPlayerService));
     }
 
     /// <summary>
@@ -92,20 +91,20 @@ public class AudioPlayerService : IDisposable
         {
             if (_mediaPlayer.IsPlaying)
             {
-                Api.Logger!.LogError("An audio file is already being played. Please stop it first.");
+                _logger.LogError("An audio file is already being played. Please stop it first.");
                 return null;
             }
 
             var media = new Media(_libVLC, audioUri.AbsolutePath, FromType.FromLocation);
 
             _mediaPlayer.Play(media);
-            Api.Logger!.LogInformation("Playing media file from url {AudioFilePath}.", audioUri.AbsolutePath);
+            _logger.LogInformation("Playing media file from url {AudioFilePath}.", audioUri.AbsolutePath);
 
             return media;
         }
         catch (Exception e)
         {
-            Api.Logger?.LogError("An error occured trying to play the audio file from url. {e}", e.Message);
+            _logger.LogError("An error occured trying to play the audio file from url. {e}", e.Message);
             return null;
         }
     }
@@ -117,12 +116,12 @@ public class AudioPlayerService : IDisposable
     {
         if (!_mediaPlayer.IsPlaying)
         {
-            Api.Logger!.LogError("Cannot stop the media player. No media is playing.");
+            _logger.LogError("Cannot stop the media player. No media is playing.");
         }
 
         _mediaPlayer.Stop();
         _mediaPlayer.Media?.Dispose();
-        Api.Logger!.LogDebug("Stopped media player.");
+        _logger.LogDebug("Stopped media player.");
     }
 
     /// <summary>
@@ -131,7 +130,7 @@ public class AudioPlayerService : IDisposable
     public void Pause()
     {
         _mediaPlayer.Pause();
-        Api.Logger!.LogDebug("Paused media player.");
+        _logger.LogDebug("Paused media player.");
     }
 
     /// <summary>
@@ -143,11 +142,11 @@ public class AudioPlayerService : IDisposable
         try
         {
             _mediaPlayer.Volume = newVolume;
-            Api.Logger!.LogTrace("Changed audio volume to {NewAudioVolume}.", newVolume);
+            _logger.LogDebug("Changed audio volume to {NewAudioVolume}.", newVolume);
         }
         catch (Exception e)
         {
-            Api.Logger!.LogError("An error occured trying to change audio volume. {Exception}", e.Message);
+            _logger.LogError("An error occured trying to change audio volume. {Exception}", e.Message);
         }
     }
 
@@ -159,12 +158,12 @@ public class AudioPlayerService : IDisposable
     {
         if (!_mediaPlayer.IsPlaying)
         {
-            Api.Logger!.LogError("Cannot change audio rate, no media is playing.");
+            _logger.LogError("Cannot change audio rate, no media is playing.");
         }
         else
         {
             _mediaPlayer.SetRate(speed);
-            Api.Logger!.LogTrace("Changed audio rate to {Speed}.", speed);
+            _logger.LogDebug("Changed audio rate to {Speed}.", speed);
         }
     }
 
@@ -174,7 +173,7 @@ public class AudioPlayerService : IDisposable
     public void Mute()
     {
         _mediaPlayer.Mute = true;
-        Api.Logger!.LogDebug("Muted media.");
+        _logger.LogDebug("Muted media.");
     }
 
     /// <summary>
@@ -183,6 +182,36 @@ public class AudioPlayerService : IDisposable
     public void Unmute()
     {
         _mediaPlayer.Mute = false;
-        Api.Logger!.LogDebug("Unuted media.");
+        _logger.LogDebug("Unmuted media.");
+    }
+
+    /// <summary>
+    ///     To be called when done using.
+    /// </summary>
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this); // Dispose AudioPlayerService.
+        _logger.LogDebug("Disposed.");
+    }
+
+    ~AudioPlayerService()
+    {
+        Dispose(false);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (_disposed) return;
+        if (disposing)
+        {
+            _mediaPlayer.Stop(); // Make sure it stops first to avoid potential unwanted behavior.
+            _mediaPlayer.Media?.Dispose(); // Dispose the loaded media.
+        }
+
+        _mediaPlayer.Dispose();
+        _libVLC.Dispose();
+
+        _disposed = true;
     }
 }
