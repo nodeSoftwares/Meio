@@ -1,18 +1,16 @@
 using System;
+using System.IO;
 using LibVLCSharp.Shared;
 using Meio.Api.Interfaces.Services;
 using Microsoft.Extensions.Hosting;
 
-// ReSharper disable UnusedMember.Global
-
 namespace Meio.Api.Services;
 
-internal class AudioPlayerService : IAudioPlayerService, IDisposable
+internal sealed class AudioPlayerService : IAudioPlayerService, IDisposable
 {
-    // ReSharper disable once InconsistentNaming
-    private readonly LibVLC _libVLC;
+    private readonly LibVLC _libVlc = null!;
     private readonly IMeioLogger _logger;
-    private readonly MediaPlayer _mediaPlayer;
+    private readonly MediaPlayer _mediaPlayer = null!;
 
     private bool _disposed;
 
@@ -22,8 +20,8 @@ internal class AudioPlayerService : IAudioPlayerService, IDisposable
 
         try
         {
-            _libVLC = new LibVLC();
-            _mediaPlayer = new MediaPlayer(_libVLC);
+            _libVlc = new LibVLC();
+            _mediaPlayer = new MediaPlayer(_libVlc);
 
             applicationLifetime.ApplicationStopping.Register(() =>
             {
@@ -43,9 +41,9 @@ internal class AudioPlayerService : IAudioPlayerService, IDisposable
     }
 
     /// <summary>
-    ///     Starts playing the given audio file.
+    ///     Plays the given audio file.
     /// </summary>
-    /// <param name="audioFilePath">Audio file path.</param>
+    /// <param name="audioFilePath">Audio file's path.</param>
     public Media? Play(string audioFilePath)
     {
         ObjectDisposedException.ThrowIf(_disposed, "AudioPlayerService is disposed.");
@@ -53,58 +51,62 @@ internal class AudioPlayerService : IAudioPlayerService, IDisposable
         try
         {
             if (_mediaPlayer.IsPlaying)
-            {
-                _logger.LogError("An audio file is already being played. Please stop it first.");
-                return null;
-            }
+                throw new InvalidOperationException("Cannot play media player. Already playing.");
 
-            var media = new Media(_libVLC, audioFilePath);
+            if (!File.Exists(audioFilePath))
+                throw new FileNotFoundException("The given audio file doesn't exist.");
+
+            var media = new Media(_libVlc, audioFilePath);
 
             _mediaPlayer.Play(media);
-            _logger.LogInformation("Playing media file {AudioFilePath} .", audioFilePath);
+            _logger.LogInformation("Playing media file {AudioFilePath}.", audioFilePath);
 
             _mediaPlayer.EndReached += (_, _) =>
             {
                 _logger.LogDebug("Media playback ended.");
-                // _mediaPlayer.Stop()
+                _mediaPlayer.Stop();
             };
 
             return media;
         }
         catch (Exception e)
         {
-            _logger.LogError("An error occured trying to play the audio file. {e}", e.Message);
+            _logger.LogError("Cannot play audio file. {e}", e.Message);
 
             return null;
         }
-
-        throw new ObjectDisposedException(nameof(AudioPlayerService));
     }
 
     /// <summary>
     ///     Starts playing the given audio file.
     /// </summary>
-    /// <param name="audioUri">Audio file Uri.</param>
+    /// <param name="audioUri">Audio file's Uri.</param>
     public Media? Play(Uri audioUri)
     {
         try
         {
             if (_mediaPlayer.IsPlaying)
-            {
-                _logger.LogError("An audio file is already being played. Please stop it first.");
-                return null;
-            }
+                throw new InvalidOperationException("Cannot play media player. Already playing.");
 
-            var media = new Media(_libVLC, audioUri.AbsolutePath, FromType.FromLocation);
+            if (!audioUri.IsFile)
+                throw new FileNotFoundException("The given audio uri isn't valid.");
+
+            var media = new Media(_libVlc, audioUri.AbsolutePath, FromType.FromLocation);
 
             _mediaPlayer.Play(media);
             _logger.LogInformation("Playing media file from url {AudioFilePath}.", audioUri.AbsolutePath);
+
+            _mediaPlayer.EndReached += (_, _) =>
+            {
+                _logger.LogDebug("Media playback ended.");
+                _mediaPlayer.Stop();
+            };
 
             return media;
         }
         catch (Exception e)
         {
-            _logger.LogError("An error occured trying to play the audio file from url. {e}", e.Message);
+            _logger.LogError("Cannot play audio Uri. {e}", e.Message);
             return null;
         }
     }
@@ -115,9 +117,7 @@ internal class AudioPlayerService : IAudioPlayerService, IDisposable
     public void Stop()
     {
         if (!_mediaPlayer.IsPlaying)
-        {
-            _logger.LogError("Cannot stop the media player. No media is playing.");
-        }
+            _logger.LogWarning("Cannot stop the media player. No media is playing.");
 
         _mediaPlayer.Stop();
         _mediaPlayer.Media?.Dispose();
@@ -200,7 +200,7 @@ internal class AudioPlayerService : IAudioPlayerService, IDisposable
         Dispose(false);
     }
 
-    protected virtual void Dispose(bool disposing)
+    private void Dispose(bool disposing)
     {
         if (_disposed) return;
         if (disposing)
@@ -210,7 +210,7 @@ internal class AudioPlayerService : IAudioPlayerService, IDisposable
         }
 
         _mediaPlayer.Dispose();
-        _libVLC.Dispose();
+        _libVlc.Dispose();
 
         _disposed = true;
     }
