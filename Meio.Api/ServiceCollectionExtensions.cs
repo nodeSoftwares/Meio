@@ -10,6 +10,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddSingleton<IMeioLogger, MeioLogger>();
         services.AddSingleton<IAudioPlayerService, AudioPlayerService>();
+        services.AddSingleton<IAudioMetadataService, AudioMetadataService>();
         return services;
     }
 }
