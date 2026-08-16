@@ -1,17 +1,18 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Meio.Api;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
-using PrettyLogging.Console;
 
 namespace Meio.app;
 
 public class App : Application
 {
-    private static ILoggerFactory? LoggerFactory { get; set; }
+    private IHost _host = null!;
 
-    public static ILogger<App>? Logger { get; private set; }
+    public static ILogger Logger { get; private set; } = null!;
 
     public override void Initialize()
     {
@@ -20,37 +21,28 @@ public class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        // Create and configure PrettyLogger
-        LoggerFactory = Microsoft.Extensions.Logging.LoggerFactory.Create(builder =>
-        {
-            builder.ClearProviders();
-            builder.AddPrettyConsole(opt =>
+        _host = Host.CreateDefaultBuilder()
+            .ConfigureServices((_, services) =>
             {
-                opt.ShowLogLevel = true;
-                opt.ShowEventId = false;
-                opt.ShowManagedThreadId = false;
-                opt.SingleLine = true;
-                opt.IncludeScopes = true;
-                opt.ShowTimestamp = true;
-                opt.LogLevelCase = LogLevelCase.Upper;
-                opt.CategoryMode = LoggerCategoryMode.Short;
-                opt.ColorBehavior = LoggerColorBehavior.Enabled;
-                opt.UseUtcTimestamp = false;
-            });
+                services.AddHttpClient();
+                services.AddPrettyConsole();
+                services.AddMeioApi();
+                services.AddCommonServices();
+            })
+            .Build();
 
-#if DEBUG
-            builder.SetMinimumLevel(LogLevel.Trace);
-#else
-            builder.SetMinimumLevel(LogLevel.Information);
-#endif
-        });
+        _host.StartAsync().GetAwaiter().GetResult();
 
-        Logger = LoggerFactory.CreateLogger<App>();
+        var loggerFactory = _host.Services.GetRequiredService<ILoggerFactory>();
+        Logger = loggerFactory.CreateLogger("Meio.App");
         Logger.LogInformation("Meio Application started.");
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            desktop.MainWindow = new MainWindow();
+            var mainWindow = _host.Services.GetRequiredService<MainWindow>();
+            desktop.MainWindow = mainWindow;
+
+            desktop.Exit += async (_, _) => await _host.StopAsync();
         }
 
         base.OnFrameworkInitializationCompleted();

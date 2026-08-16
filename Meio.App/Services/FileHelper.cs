@@ -27,9 +27,9 @@ public static class FileHelper
             AllowMultiple = false,
             FileTypeFilter =
             [
-                new FilePickerFileType("All")
+                new FilePickerFileType("Audio files")
                 {
-                    Patterns = ["*.mp3", "*.wav"]
+                    Patterns = ["*.mp3", "*.wav", "*.flac", "*.aac", "*.ogg", "*.m4a"]
                 }
             ]
         };

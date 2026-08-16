@@ -1,7 +1,5 @@
 ﻿using System;
-using System.IO;
 using Avalonia;
-using DotNetEnv;
 
 namespace Meio.app;
 
@@ -13,9 +11,6 @@ internal abstract class Program
     [STAThread]
     public static void Main(string[] args)
     {
-        var envPath = Path.Combine(AppContext.BaseDirectory, "../../../../.env");
-        Env.Load(envPath);
-
         BuildAvaloniaApp()
             .StartWithClassicDesktopLifetime(args);
     }

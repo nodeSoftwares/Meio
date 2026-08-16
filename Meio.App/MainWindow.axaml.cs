@@ -1,29 +1,37 @@
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
-using Meio.Api.Services;
+using Meio.Api.Interfaces.Services;
+using Meio.app.Interfaces.Services;
 using Meio.app.Services;
 using Microsoft.Extensions.Logging;
+using TagLib;
 
 namespace Meio.app;
 
 public partial class MainWindow : Window
 {
-    private readonly AudioPlayerService _audioPlayerService;
-    private string? _author = "unknown"; // this is a cheap fix, but it is because this Window is just for testing, so it's alright.
+    private readonly IAudioPlayerService _audioPlayerService;
+    private readonly IDiscordService _discordService;
+    private readonly ILogger _logger;
     private bool _debounce;
     private string? _filePath;
     private CancellationTokenSource? _volumeDebounceToken;
 
     // DIS WHOLE CODE IS HORIRBLE AAAAAAAAAA
 
-    public MainWindow()
+    public MainWindow(ILogger<App> logger, IAudioPlayerService audioPlayerService, IDiscordService discordService)
     {
+        _logger = logger;
+        _audioPlayerService = audioPlayerService;
+        _discordService = discordService;
+
         InitializeComponent();
-        _audioPlayerService = new AudioPlayerService();
+        Task.Run(() => _discordService.SetPresence());
     }
 
     private void Button_OnClick(object? sender, RoutedEventArgs e)
@@ -34,16 +42,18 @@ public partial class MainWindow : Window
 
             if (_filePath == null) return;
 
-            var metadata = AudioMetadataService.LoadMetadata(_filePath);
+            var metadata = File.Create(_filePath);
             if (metadata == null) return;
 
             _audioPlayerService.Play(_filePath);
 
             PlayButton.Content = "Stop";
-            _author = metadata.Artists is { Length: 0 } ? "unknown" : metadata.Artists?[0];
 
-            CurrentMusicText.Text = $"{metadata.Title} - {_author}";
-            AlbumArtImage.Source = metadata.AlbumArt != null ? ImageHelper.LoadBitmapFromBytes(metadata.AlbumArt) : null;
+            CurrentMusicText.Text = $"{metadata.Tag.Title} - {metadata.Tag.Performers.FirstOrDefault("unknown")}";
+            AlbumArtImage.Source =
+                metadata.Tag.Pictures != null ? ImageHelper.LoadBitmapFromBytes(metadata.Tag.Pictures.First().Data.Data) : null;
+
+            Task.Run(() => _discordService.SetPresencePlay(metadata));
         }
         else
         {
@@ -53,6 +63,7 @@ public partial class MainWindow : Window
 
             _audioPlayerService.Stop();
             _debounce = false;
+            Task.Run(() => _discordService.SetPresence());
         }
     }
 
@@ -89,7 +100,7 @@ public partial class MainWindow : Window
         }
         catch (Exception exception)
         {
-            App.Logger!.LogError("There was an error trying to parse the URI unescape data. {exception}", exception.Message);
+            _logger.LogError("There was an error trying to parse the URI unescape data. {exception}", exception.Message);
         }
     }
 }
