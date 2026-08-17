@@ -21,6 +21,7 @@
         </PackageReference>
         <PackageReference Include="DiscordRichPresence" Version="1.6.1.70"/>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="11.0.0-preview.6.26359.118"/>
+        <PackageReference Include="Tmds.DBus.Protocol" Version="0.94.2"/>
 
     </ItemGroup>
 
