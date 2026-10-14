@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meio.App", "Meio.App\Meio.A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meio.Api", "Meio.Api\Meio.Api.csproj", "{DADDD56A-A716-4AB4-9570-AD0C56C8EB3B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meio.Api.Tests", "Meio.Api.Tests\Meio.Api.Tests.csproj", "{9B7E2A68-882C-4A44-9D69-332B0EF1201E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{DADDD56A-A716-4AB4-9570-AD0C56C8EB3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DADDD56A-A716-4AB4-9570-AD0C56C8EB3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DADDD56A-A716-4AB4-9570-AD0C56C8EB3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B7E2A68-882C-4A44-9D69-332B0EF1201E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B7E2A68-882C-4A44-9D69-332B0EF1201E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B7E2A68-882C-4A44-9D69-332B0EF1201E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B7E2A68-882C-4A44-9D69-332B0EF1201E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
