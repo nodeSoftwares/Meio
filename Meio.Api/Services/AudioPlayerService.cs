@@ -8,9 +8,9 @@ namespace Meio.Api.Services;
 
 internal sealed class AudioPlayerService : IAudioPlayerService, IDisposable
 {
-    private readonly LibVLC _libVlc = null!;
+    private readonly LibVLC? _libVlc;
     private readonly IMeioLogger _logger;
-    private readonly MediaPlayer _mediaPlayer = null!;
+    private readonly MediaPlayer? _mediaPlayer;
 
     private bool _disposed;
 
@@ -46,11 +46,11 @@ internal sealed class AudioPlayerService : IAudioPlayerService, IDisposable
     /// <param name="audioFilePath">Audio file's path.</param>
     public Media? Play(string audioFilePath)
     {
-        ObjectDisposedException.ThrowIf(_disposed, "AudioPlayerService is disposed.");
-
+        EnsureInitializedAndNotDisposed();
+        
         try
         {
-            if (_mediaPlayer.IsPlaying)
+            if (_mediaPlayer!.IsPlaying)
                 throw new InvalidOperationException("Cannot play media player. Already playing.");
 
             if (!File.Exists(audioFilePath))
@@ -83,9 +83,11 @@ internal sealed class AudioPlayerService : IAudioPlayerService, IDisposable
     /// <param name="audioUri">Audio file's Uri.</param>
     public Media? Play(Uri audioUri)
     {
+        EnsureInitializedAndNotDisposed();
+        
         try
         {
-            if (_mediaPlayer.IsPlaying)
+            if (_mediaPlayer!.IsPlaying)
                 throw new InvalidOperationException("Cannot play media player. Already playing.");
 
             if (!audioUri.IsFile)
@@ -116,7 +118,9 @@ internal sealed class AudioPlayerService : IAudioPlayerService, IDisposable
     /// </summary>
     public void Stop()
     {
-        if (!_mediaPlayer.IsPlaying)
+        EnsureInitializedAndNotDisposed();
+        
+        if (!_mediaPlayer!.IsPlaying)
             _logger.LogWarning("Cannot stop the media player. No media is playing.");
 
         _mediaPlayer.Stop();
@@ -129,7 +133,9 @@ internal sealed class AudioPlayerService : IAudioPlayerService, IDisposable
     /// </summary>
     public void Pause()
     {
-        _mediaPlayer.Pause();
+        EnsureInitializedAndNotDisposed();
+        
+        _mediaPlayer!.Pause();
         _logger.LogDebug("Paused media player.");
     }
 
@@ -139,9 +145,11 @@ internal sealed class AudioPlayerService : IAudioPlayerService, IDisposable
     /// <param name="newVolume">New volume of the media player.</param>
     public void ChangeVolume(int newVolume)
     {
+        EnsureInitializedAndNotDisposed();
+        
         try
         {
-            _mediaPlayer.Volume = newVolume;
+            _mediaPlayer!.Volume = newVolume;
             _logger.LogDebug("Changed audio volume to {NewAudioVolume}.", newVolume);
         }
         catch (Exception e)
@@ -156,7 +164,9 @@ internal sealed class AudioPlayerService : IAudioPlayerService, IDisposable
     /// <param name="speed">New playback speed.</param>
     public void ChangePlaybackSpeed(float speed)
     {
-        if (!_mediaPlayer.IsPlaying)
+        EnsureInitializedAndNotDisposed();
+        
+        if (!_mediaPlayer!.IsPlaying)
         {
             _logger.LogError("Cannot change audio rate, no media is playing.");
         }
@@ -172,7 +182,9 @@ internal sealed class AudioPlayerService : IAudioPlayerService, IDisposable
     /// </summary>
     public void Mute()
     {
-        _mediaPlayer.Mute = true;
+        EnsureInitializedAndNotDisposed();
+        
+        _mediaPlayer!.Mute = true;
         _logger.LogDebug("Muted media.");
     }
 
@@ -181,7 +193,9 @@ internal sealed class AudioPlayerService : IAudioPlayerService, IDisposable
     /// </summary>
     public void Unmute()
     {
-        _mediaPlayer.Mute = false;
+        EnsureInitializedAndNotDisposed();
+        
+        _mediaPlayer!.Mute = false;
         _logger.LogDebug("Unmuted media.");
     }
 
@@ -205,13 +219,22 @@ internal sealed class AudioPlayerService : IAudioPlayerService, IDisposable
         if (_disposed) return;
         if (disposing)
         {
-            _mediaPlayer.Stop(); // Make sure it stops first to avoid potential unwanted behavior.
-            _mediaPlayer.Media?.Dispose(); // Dispose the loaded media.
+            _mediaPlayer?.Stop(); // Make sure it stops first to avoid potential unwanted behavior.
+            _mediaPlayer?.Media?.Dispose(); // Dispose the loaded media.
         }
 
-        _mediaPlayer.Dispose();
-        _libVlc.Dispose();
+        _mediaPlayer?.Dispose();
+        _libVlc?.Dispose();
 
         _disposed = true;
+    }
+    
+    private void EnsureInitializedAndNotDisposed()
+    {
+        ObjectDisposedException.ThrowIf(_disposed, "AudioPlayerService is disposed.");
+        if (_libVlc is null || _mediaPlayer is null)
+        {
+            throw new InvalidOperationException("AudioPlayerService is not initialized due to LibVLC failing to initialize.");
+        }
     }
 }
