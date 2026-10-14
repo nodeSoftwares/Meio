@@ -28,7 +28,7 @@ public class App : Application
                 services.AddPrettyConsole();
                 services.AddMeioApi();
                 services.AddCommonServices();
-            })
+            }).UseConsoleLifetime()
             .Build();
 
         _host.StartAsync().GetAwaiter().GetResult();
@@ -42,7 +42,11 @@ public class App : Application
             var mainWindow = _host.Services.GetRequiredService<MainWindow>();
             desktop.MainWindow = mainWindow;
 
-            desktop.Exit += async (_, _) => await _host.StopAsync();
+            desktop.Exit += (_, _) =>
+            {
+                _host.StopAsync().GetAwaiter().GetResult();
+                _host.Dispose();
+            };
         }
 
         base.OnFrameworkInitializationCompleted();
