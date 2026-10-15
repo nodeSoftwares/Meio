@@ -20,6 +20,8 @@ public class DiscordPresence : IDiscordService, IDisposable
     private readonly TimeSpan _cooldown = TimeSpan.FromSeconds(16); // Time between calls.
     private readonly ILogger<App> _logger;
     private readonly SemaphoreSlim _semaphore = new(1, 1); // Prevents multiple calls.
+
+    private bool _disposed;
     private DateTime _lastUpdate = DateTime.MinValue;
 
     public DiscordPresence(ILogger<App> logger, IAudioMetadataService audioMetadataService)
@@ -39,7 +41,7 @@ public class DiscordPresence : IDiscordService, IDisposable
 
     public async Task SetPresence(string text = "", string state = "Idling...")
     {
-        if (!IsConnected)
+        if (!IsConnected || _disposed)
             _logger.LogError("Tried setting presence, but Discord is not connected.");
 
         await _semaphore.WaitAsync();
@@ -117,7 +119,7 @@ public class DiscordPresence : IDiscordService, IDisposable
 
     public void ClearPresence()
     {
-        if (!IsConnected)
+        if (!IsConnected || _disposed)
             _logger.LogError("Tried clearing presence, but Discord is not connected.");
 
         _client?.ClearPresence();
@@ -133,6 +135,14 @@ public class DiscordPresence : IDiscordService, IDisposable
 
     protected virtual void Dispose(bool disposing)
     {
-        // TODO: Dispose DiscordService
+        if (_disposed) return;
+        if (disposing)
+        {
+            _client?.ClearPresence();
+        }
+
+        _client?.Dispose();
+
+        _disposed = true;
     }
 }

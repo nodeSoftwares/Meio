@@ -6,12 +6,10 @@ using Moq;
 namespace Meio.Api.Tests;
 
 [TestClass]
-public class AudioMetadataService
+public class AudioMetadataServiceTests(TestContext testContext)
 {
     private Mock<IHostApplicationLifetime> _lifetimeMock = null!;
     private IServiceProvider _provider = null!;
-
-    public TestContext TestContext { get; set; }
 
     [TestInitialize]
     public void TestInitialize()
@@ -34,7 +32,7 @@ public class AudioMetadataService
         var audioMetadataService = _provider.GetRequiredService<IAudioMetadataService>();
 
         const string testReleaseId = "1610973c-e6b3-4e0b-808f-586e7aaa0d83"; // Jane! | The Long Faces
-        var coverResult = audioMetadataService.GetReleasePictureAsync(testReleaseId, TestContext.CancellationToken);
+        var coverResult = audioMetadataService.GetReleasePictureAsync(testReleaseId, testContext.CancellationToken);
 
         Console.WriteLine(coverResult.Result);
         Assert.IsNotNull(coverResult.Result);
@@ -45,7 +43,7 @@ public class AudioMetadataService
     {
         var audioMetadataService = _provider.GetRequiredService<IAudioMetadataService>();
 
-        var coverResult = audioMetadataService.GetReleasePictureAsync(string.Empty, TestContext.CancellationToken);
+        var coverResult = audioMetadataService.GetReleasePictureAsync(string.Empty, testContext.CancellationToken);
 
         Console.WriteLine(coverResult.Result);
         Assert.IsNull(coverResult.Result);
