@@ -99,7 +99,7 @@ internal sealed class AudioPlayerService : IAudioPlayerService, IDisposable
             var media = audioUri.IsFile
                 ? new Media(_libVlc!, audioUri.LocalPath)
                 : new Media(_libVlc!, audioUri.ToString(), FromType.FromLocation);
-            
+
             _mediaPlayer.Play(media);
             _logger.LogInformation("Playing media file from {AudioUri}.", audioUri);
 

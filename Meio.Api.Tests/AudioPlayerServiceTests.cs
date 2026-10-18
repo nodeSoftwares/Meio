@@ -164,8 +164,8 @@ public class AudioPlayerServiceTests
 
         await WaitUntilPlaying(media);
         // Add more delay to ensure it isn't trying to pause when the media still isn't considered as playing.
-        await Task.Delay(200, TestContext.CancellationToken); 
-        
+        await Task.Delay(200, TestContext.CancellationToken);
+
         audioPlayerService.Pause();
         Assert.AreEqual(VLCState.Paused, media.State);
 
