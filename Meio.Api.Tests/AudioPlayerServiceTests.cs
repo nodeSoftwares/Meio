@@ -50,7 +50,7 @@ public class AudioPlayerServiceTests
         var media = audioPlayerService.Play(mediaUri);
         Assert.IsNotNull(media);
 
-        await WaitUntilPlaying(media);
+        await WaitUntilState(media, VLCState.Playing);
 
         Assert.AreEqual(VLCState.Playing, media.State);
 
@@ -80,7 +80,7 @@ public class AudioPlayerServiceTests
         var media = audioPlayerService.Play(mediaUri);
         Assert.IsNotNull(media);
 
-        await WaitUntilPlaying(media);
+        await WaitUntilState(media, VLCState.Playing);
 
         Assert.AreEqual(VLCState.Playing, media.State);
     }
@@ -109,7 +109,7 @@ public class AudioPlayerServiceTests
         var media = audioPlayerService.Play(mediaUri);
         Assert.IsNotNull(media);
 
-        await WaitUntilPlaying(media);
+        await WaitUntilState(media, VLCState.Playing);
 
         Assert.AreEqual(VLCState.Playing, media.State);
 
@@ -126,7 +126,7 @@ public class AudioPlayerServiceTests
         var media = audioPlayerService.Play(mediaUri);
         Assert.IsNotNull(media);
 
-        await WaitUntilPlaying(media);
+        await WaitUntilState(media, VLCState.Playing);
         await Task.Delay((int)media.Duration, TestContext.CancellationToken); // Wait for the media's playback to end.
 
         Assert.AreEqual(VLCState.Ended, media.State);
@@ -144,7 +144,7 @@ public class AudioPlayerServiceTests
         var media = audioPlayerService.Play(mediaUri);
         Assert.IsNotNull(media);
 
-        await WaitUntilPlaying(media);
+        await WaitUntilState(media, VLCState.Playing);
 
         audioPlayerService.Stop(); // Disposes media
         Assert.AreEqual(VLCState.Stopped, media.State);
@@ -162,11 +162,11 @@ public class AudioPlayerServiceTests
         var media = audioPlayerService.Play(mediaUri);
         Assert.IsNotNull(media);
 
-        await WaitUntilPlaying(media);
-        // Add more delay to ensure it isn't trying to pause when the media still isn't considered as playing.
-        await Task.Delay(200, TestContext.CancellationToken);
+        await WaitUntilState(media, VLCState.Playing);
 
         audioPlayerService.Pause();
+        await WaitUntilState(media, VLCState.Paused); // Waits until the media is correctly paused.
+        
         Assert.AreEqual(VLCState.Paused, media.State);
 
         audioPlayerService.Stop(); // Stops and disposes the media
@@ -191,14 +191,15 @@ public class AudioPlayerServiceTests
     }
 
     /// <summary>
-    ///     Checks every 250ms if the media is playing.
+    ///     Checks every 250ms if the media corresponds to a given state.
     /// </summary>
     /// <param name="media">The media to check.</param>
+    /// <param name="state">The state to compare to.</param>
     /// <param name="timeout">Time before it stops waiting in milliseconds.</param>
-    private async Task WaitUntilPlaying(Media media, double timeout = 2250.0)
+    private async Task WaitUntilState(Media media, VLCState state, double timeout = 2250.0)
     {
         var startingTime = DateTime.Now;
-        while (media.State == VLCState.Opening)
+        while (media.State != state)
         {
             await Task.Delay(250, TestContext.CancellationToken);
             if (DateTime.Now - startingTime > TimeSpan.FromMilliseconds(timeout)) break;
