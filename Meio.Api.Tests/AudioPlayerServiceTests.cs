@@ -29,13 +29,15 @@ public class AudioPlayerServiceTests
             configure.AddConsole();
             configure.AddDebug();
             configure.SetMinimumLevel(LogLevel.Debug);
+            configure.Services.Configure<AudioPlayerOptions>(options =>
+            {
+                options.LibVlcArguments = ["--aout=dummy"]; // uses a dummy audio output for headless systems.
+            });
         });
         services.AddHttpClient();
         services.AddMeioApi();
 
         _provider = services.BuildServiceProvider();
-
-        _provider.GetRequiredService<IAudioPlayerService>().ChangeVolume(0);
     }
 
     [TestMethod]

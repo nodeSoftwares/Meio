@@ -29,6 +29,11 @@ var host = Host.CreateDefaultBuilder(args).ConfigureServices((_, services) =>
             opt.IncludeScopes = true;
             opt.LogLevelCase = LogLevelCase.Upper;
         });
+        builder.Services.Configure<AudioPlayerOptions>(options =>
+        {
+            // Here you can pass arguments to the LibVLC instance.
+            options.LibVlcArguments = ["-v", "--network-caching=1000"]; // These arguments are examples.
+        });
     });
 
     // Configure HTTP client for external API calls (MusicBrainz, etc.).
@@ -46,7 +51,7 @@ host.Start(); // Start the host to initialize registered services.
 
 // Resolve the audio player service.
 var audioPlayerService = host.Services.GetRequiredService<IAudioPlayerService>();
-// var metadataService = host.Services.GetRequiredService<IAudioMetadataService>(); // Uncomment when needed
+// var metadataService = host.Services.GetRequiredService<IAudioMetadataService>();
 
 Console.WriteLine("Playing example audio from URL");
 audioPlayerService.Play(new Uri("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"));

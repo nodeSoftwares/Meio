@@ -3,6 +3,7 @@ using System.IO;
 using LibVLCSharp.Shared;
 using Meio.Api.Interfaces.Services;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 namespace Meio.Api.Services;
 
@@ -14,13 +15,13 @@ internal sealed class AudioPlayerService : IAudioPlayerService, IDisposable
 
     private bool _disposed;
 
-    public AudioPlayerService(IMeioLogger logger, IHostApplicationLifetime applicationLifetime)
+    public AudioPlayerService(IOptions<AudioPlayerOptions> options, IMeioLogger logger, IHostApplicationLifetime applicationLifetime)
     {
         _logger = logger;
 
         try
         {
-            _libVlc = new LibVLC();
+            _libVlc = new LibVLC(options.Value.LibVlcArguments);
             _mediaPlayer = new MediaPlayer(_libVlc);
 
             applicationLifetime.ApplicationStopping.Register(() =>
