@@ -1,7 +1,9 @@
 ﻿using Meio.Api.Interfaces.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Moq;
+using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace Meio.Api.Tests;
 
@@ -19,7 +21,12 @@ public sealed class DependencyInjectionTests
         _lifetimeMock = new Mock<IHostApplicationLifetime>();
         services.AddSingleton(_lifetimeMock.Object);
 
-        services.AddLogging();
+        services.AddLogging(configure =>
+        {
+            configure.AddConsole();
+            configure.AddDebug();
+            configure.SetMinimumLevel(LogLevel.Debug);
+        });
         services.AddHttpClient();
         services.AddMeioApi();
 

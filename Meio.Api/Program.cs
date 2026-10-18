@@ -40,7 +40,7 @@ var host = Host.CreateDefaultBuilder(args).ConfigureServices((_, services) =>
         });
 
     services.AddMeioApi(); // Services are registered here.
-}).Build();
+}).UseConsoleLifetime().Build();
 
 host.Start(); // Start the host to initialize registered services.
 
@@ -48,8 +48,8 @@ host.Start(); // Start the host to initialize registered services.
 var audioPlayerService = host.Services.GetRequiredService<IAudioPlayerService>();
 // var metadataService = host.Services.GetRequiredService<IAudioMetadataService>(); // Uncomment when needed
 
-Console.WriteLine("Playing example audio");
-audioPlayerService.Play("/example/audio/path"); // TODO: Add audio samples
+Console.WriteLine("Playing example audio from URL");
+audioPlayerService.Play(new Uri("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"));
 
 // Waiting until graceful shutdown (CTRL+C)
 Console.WriteLine("Press CTRL+C to exit...");

@@ -67,6 +67,8 @@ internal sealed class AudioPlayerService : IAudioPlayerService, IDisposable
                 _mediaPlayer.Stop();
             };
 
+            _mediaPlayer.EncounteredError += OnVLCEncounteredError;
+
             return media;
         }
         catch (Exception e)
@@ -90,13 +92,15 @@ internal sealed class AudioPlayerService : IAudioPlayerService, IDisposable
             if (_mediaPlayer!.IsPlaying)
                 throw new InvalidOperationException("Cannot play media player. Already playing.");
 
-            if (!audioUri.IsFile)
-                throw new FileNotFoundException("The given audio uri isn't valid.");
+            if (audioUri.Scheme == "file" && !File.Exists(audioUri.LocalPath))
+                throw new FileNotFoundException("The given audio file doesn't exist.");
 
-            var media = new Media(_libVlc!, audioUri.AbsolutePath, FromType.FromLocation);
-
+            var media = audioUri.IsFile
+                ? new Media(_libVlc!, audioUri.LocalPath)
+                : new Media(_libVlc!, audioUri.ToString(), FromType.FromLocation);
+            
             _mediaPlayer.Play(media);
-            _logger.LogInformation("Playing media file from url {AudioFilePath}.", audioUri.AbsolutePath);
+            _logger.LogInformation("Playing media file from {AudioUri}.", audioUri);
 
             _mediaPlayer.EndReached += (_, _) =>
             {
@@ -104,11 +108,13 @@ internal sealed class AudioPlayerService : IAudioPlayerService, IDisposable
                 _mediaPlayer.Stop();
             };
 
+            _mediaPlayer.EncounteredError += OnVLCEncounteredError;
+
             return media;
         }
         catch (Exception e)
         {
-            _logger.LogError("Cannot play audio Uri. {e}", e.Message);
+            _logger.LogError(e, "Cannot play audio Uri. {e}", e.Message);
             return null;
         }
     }
@@ -120,8 +126,11 @@ internal sealed class AudioPlayerService : IAudioPlayerService, IDisposable
     {
         EnsureInitializedAndNotDisposed();
 
-        if (!_mediaPlayer!.IsPlaying)
+        if (!_mediaPlayer!.IsPlaying && _mediaPlayer.Media is null)
+        {
             _logger.LogWarning("Cannot stop the media player. No media is playing.");
+            return;
+        }
 
         _mediaPlayer.Stop();
         _mediaPlayer.Media?.Dispose();
@@ -234,7 +243,14 @@ internal sealed class AudioPlayerService : IAudioPlayerService, IDisposable
         ObjectDisposedException.ThrowIf(_disposed, "AudioPlayerService is disposed.");
         if (_libVlc is null || _mediaPlayer is null)
         {
-            throw new InvalidOperationException("AudioPlayerService is not initialized due to LibVLC failing to initialize.");
+            throw new NullReferenceException("AudioPlayerService is not initialized due to LibVLC failing to initialize.");
         }
+    }
+
+    private void OnVLCEncounteredError(object? obj, EventArgs args)
+    {
+        _logger.LogError("Media playback encountered an error.");
+        if (_mediaPlayer is { IsPlaying: true }) _mediaPlayer.Stop();
+        throw new Exception("Media playback encountered an error.");
     }
 }
