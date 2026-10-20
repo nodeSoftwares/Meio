@@ -4,12 +4,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using DiscordRPC;
 using Meio.Api.Interfaces.Services;
-using Meio.app.Interfaces.Services;
+using Meio.desktop.Interfaces.Services;
 using Microsoft.Extensions.Logging;
 using TagLib;
 using static System.GC;
 
-namespace Meio.app.Services;
+namespace Meio.desktop.Services;
 
 public class DiscordPresence : IDiscordService, IDisposable
 {

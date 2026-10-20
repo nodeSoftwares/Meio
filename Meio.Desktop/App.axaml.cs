@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Meio.app;
+namespace Meio.desktop;
 
 public class App : Application
 {
@@ -34,7 +34,7 @@ public class App : Application
         _host.StartAsync().GetAwaiter().GetResult();
 
         var loggerFactory = _host.Services.GetRequiredService<ILoggerFactory>();
-        Logger = loggerFactory.CreateLogger("Meio.App");
+        Logger = loggerFactory.CreateLogger("Meio.Desktop");
         Logger.LogInformation("Meio Application started.");
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)

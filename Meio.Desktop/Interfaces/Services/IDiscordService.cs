@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using TagLib;
 
-namespace Meio.app.Interfaces.Services;
+namespace Meio.desktop.Interfaces.Services;
 
 public interface IDiscordService
 {
