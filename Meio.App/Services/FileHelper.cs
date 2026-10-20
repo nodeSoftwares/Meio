@@ -27,25 +27,25 @@ public static class FileHelper
             AllowMultiple = false,
             FileTypeFilter =
             [
-                new FilePickerFileType("All")
+                new FilePickerFileType("Audio files")
                 {
-                    Patterns = ["*.mp3", "*.wav"]
+                    Patterns = ["*.mp3", "*.wav", "*.flac", "*.aac", "*.ogg", "*.m4a"]
                 }
             ]
         };
 
         var result = await provider.OpenFilePickerAsync(options);
-        App.Logger!.LogTrace("Asked for a file.");
+        App.Logger.LogTrace("Asked for a file.");
 
         if (result.Count <= 0)
         {
-            App.Logger!.LogTrace("No file was given.");
+            App.Logger.LogTrace("No file was given.");
             return null; // No file was given
         }
 
         var file = result[0];
         var filePath = file.Path;
-        App.Logger!.LogDebug("Got {FilePath} as file.", filePath);
+        App.Logger.LogDebug("Got {FilePath} as file.", filePath);
 
         return filePath;
     }
