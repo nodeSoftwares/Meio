@@ -1,11 +1,8 @@
-using System;
-using Meio.Api;
-using Meio.Api.Interfaces.Services;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using PrettyLogging.Console;
+# Usage
 
+**TO-DO**
+
+```csharp
 /* This demonstrates how to set up and use the Meio.Api with
  * - Dependency Injection
  * - Logging with PrettyConsole
@@ -59,3 +56,4 @@ audioPlayerService.Play(new Uri("https://www.soundhelix.com/examples/mp3/SoundHe
 // Waiting until graceful shutdown (CTRL+C)
 Console.WriteLine("Press CTRL+C to exit...");
 host.WaitForShutdown();
+```
