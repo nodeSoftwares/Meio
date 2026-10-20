@@ -5,7 +5,7 @@
         <Nullable>enable</Nullable>
         <PublishTrimmed>True</PublishTrimmed>
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
-        <ApplicationManifest>desktop.manifest</ApplicationManifest>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
         <RootNamespace>Meio.desktop</RootNamespace>
     </PropertyGroup>
