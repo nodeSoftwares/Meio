@@ -42,7 +42,8 @@ See `contributing.md` for ways to get started. TODO
 Please adhere to this project's `code of conduct`.
 
 For contributing you need some dependancies listed below :
-- Dotnet 8.0 SDK
+
+- Dotnet 10.0 SDK
 - libvlc
 ## Feedback
 
