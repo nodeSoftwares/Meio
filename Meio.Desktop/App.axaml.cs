@@ -34,7 +34,7 @@ public class App : Application
         _host.StartAsync().GetAwaiter().GetResult();
 
         var loggerFactory = _host.Services.GetRequiredService<ILoggerFactory>();
-        Logger = loggerFactory.CreateLogger("Meio.Desktop");
+        Logger = loggerFactory.CreateLogger("Meio.App");
         Logger.LogInformation("Meio Application started.");
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
