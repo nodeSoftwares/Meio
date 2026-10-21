@@ -1,7 +1,7 @@
 ﻿using System;
 using Avalonia;
 
-namespace Meio.app;
+namespace Meio.desktop;
 
 internal abstract class Program
 {
@@ -21,6 +21,19 @@ internal abstract class Program
         return AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .WithInterFont()
-            .LogToTrace();
+            .LogToTrace()
+            .With(new AvaloniaNativePlatformOptions
+            {
+                RenderingMode =
+                [
+                    AvaloniaNativeRenderingMode.Metal,
+                    AvaloniaNativeRenderingMode.OpenGl,
+                    AvaloniaNativeRenderingMode.Software
+                ]
+            })
+            .With(new MacOSPlatformOptions
+            {
+                ShowInDock = true
+            });
     }
 }

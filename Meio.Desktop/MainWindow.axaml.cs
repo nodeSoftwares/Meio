@@ -6,12 +6,12 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using Meio.Api.Interfaces.Services;
-using Meio.app.Interfaces.Services;
-using Meio.app.Services;
+using Meio.desktop.Interfaces.Services;
+using Meio.desktop.Services;
 using Microsoft.Extensions.Logging;
 using TagLib;
 
-namespace Meio.app;
+namespace Meio.desktop;
 
 public partial class MainWindow : Window
 {

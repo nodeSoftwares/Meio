@@ -4,7 +4,7 @@ using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 using Microsoft.Extensions.Logging;
 
-namespace Meio.app.Services;
+namespace Meio.desktop.Services;
 
 public static class FileHelper
 {

@@ -1,12 +1,12 @@
 using System;
-using Meio.app.Interfaces.Services;
-using Meio.app.Services;
+using Meio.desktop.Interfaces.Services;
+using Meio.desktop.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 using PrettyLogging.Console;
 
-namespace Meio.app;
+namespace Meio.desktop;
 
 public static class ServiceCollectionExtensions
 {

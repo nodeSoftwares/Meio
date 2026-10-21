@@ -1,7 +1,7 @@
 using System.IO;
 using Avalonia.Media.Imaging;
 
-namespace Meio.app.Services;
+namespace Meio.desktop.Services;
 
 public static class ImageHelper
 {
