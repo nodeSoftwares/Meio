@@ -1,6 +1,7 @@
 using System;
 using Meio.desktop.Interfaces.Services;
 using Meio.desktop.Services;
+using Meio.desktop.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
@@ -41,9 +42,11 @@ public static class ServiceCollectionExtensions
     {
         // Services
         services.AddSingleton<IDiscordService, DiscordPresence>();
+        services.AddSingleton<INavigationService, NavigationService>();
 
         // ViewModels
         services.AddSingleton<MainWindow>();
+        services.AddTransient<HomeView>();
     }
 
     public static void AddHttpClient(this IServiceCollection services)
