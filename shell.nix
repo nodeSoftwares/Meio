@@ -1,4 +1,5 @@
 # I know this shit is deprecated but it work so i don't touch it
+# I fixed the deprecated warning because flakes sucks
 { pkgs ? import <nixpkgs> {} }:
 
 let
@@ -7,12 +8,12 @@ let
     freetype
     libGL
     glib
-    xorg.libX11
-    xorg.libICE
-    xorg.libSM
-    xorg.libXext
-    xorg.libXrender
-    xorg.libxcb
+    libX11
+    libICE
+    libSM
+    libXext
+    libXrender
+    libxcb
     libxkbcommon
     libvlc
     dotnet-sdk_10
