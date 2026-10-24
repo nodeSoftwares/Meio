@@ -1,4 +1,5 @@
-# I fixed the deprecated warning but flakes sucks
+# flakes who automaticly create a shell-nix with all the necessary packages
+
 { pkgs ? import <nixpkgs> {} }:
 
 let
