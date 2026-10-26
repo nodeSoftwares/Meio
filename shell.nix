@@ -1,4 +1,3 @@
-# flakes who automaticly create a shell-nix with all the necessary packages
 # Flakes sucks BTW 
 
 { pkgs ? import <nixpkgs> {} }:
