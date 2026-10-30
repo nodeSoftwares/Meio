@@ -1,0 +1,15 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Meio.desktop.Controls.PlaylistCard"
+             x:Name="root">
+    <Border Cursor="Hand" Padding="0,0,0,4">
+        <Border Width="86"
+                Height="86"
+                Background="{Binding #root.CoverBrush}"
+                CornerRadius="16"
+                BoxShadow="1 4 4 0 #4F000000" />
+    </Border>
+</UserControl>

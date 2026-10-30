@@ -13,6 +13,12 @@ public partial class MainWindow : Window
     private readonly ILogger _logger;
     private readonly INavigationService _navigationService;
 
+    // For the Avalonia Previewer
+    public MainWindow()
+    {
+        InitializeComponent();
+    }
+
     public MainWindow(ILogger<App> logger, INavigationService navigationService, IAudioPlayerService audioPlayerService,
         IDiscordService discordService)
     {

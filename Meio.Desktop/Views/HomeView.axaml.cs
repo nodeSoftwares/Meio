@@ -9,6 +9,12 @@ public partial class HomeView : UserControl, INavigable
 {
     private readonly INavigationService _navigationService;
 
+    // For the avalonia previewer
+    public HomeView()
+    {
+        InitializeComponent();
+    }
+
     public HomeView(INavigationService navigationService)
     {
         InitializeComponent();

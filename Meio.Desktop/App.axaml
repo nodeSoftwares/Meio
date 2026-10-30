@@ -6,6 +6,24 @@
     <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.Styles>
-        <FluentTheme />
+        <FluentTheme>
+            <FluentTheme.Palettes>
+                <ColorPaletteResources x:Key="Dark"
+                                       Accent="{DynamicResource PrimaryAccentColor}"
+                                       RegionColor="#1C1C1C" />
+                <ColorPaletteResources x:Key="Light"
+                                       Accent="{DynamicResource PrimaryAccentColor}"
+                                       RegionColor="#FAFAFA" />
+            </FluentTheme.Palettes>
+        </FluentTheme>
+
+        <StyleInclude Source="avares://Meio.Desktop/Resources/Styles.axaml" />
     </Application.Styles>
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="avares://Meio.Desktop/Resources/ColorPalette.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
 </Application>

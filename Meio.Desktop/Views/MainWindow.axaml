@@ -2,13 +2,41 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        xmlns:views="clr-namespace:Meio.desktop.Views"
+        xmlns:controls="clr-namespace:Meio.desktop.Controls"
+        mc:Ignorable="d" d:DesignWidth="1366" d:DesignHeight="768"
         x:Class="Meio.desktop.Views.MainWindow"
-        ExtendClientAreaToDecorationsHint="True"
+        x:DataType="views:MainWindow"
+        TransparencyLevelHint="AcrylicBlur"
         Title="Meio">
     <Grid>
         <ContentControl Name="MainContent" ZIndex="0" />
+        <Border Name="MenuBar" Classes="Menu"
+                Width="120" CornerRadius="0,20,20,0"
+                VerticalAlignment="Stretch" HorizontalAlignment="Left"
+                ZIndex="1"> <!-- Menu Bar -->
+            <Grid RowDefinitions="Auto, *" RowSpacing="43" Margin="0, 11, 0, 0"> <!-- Content -->
+                <StackPanel Spacing="10"
+                            HorizontalAlignment="Center" Orientation="Horizontal"> <!-- Profile|Menu -->
+                    <Ellipse Width="50" Height="50" Fill="{DynamicResource PrimaryAccentColor}" />
+                    <Rectangle Width="36" Height="36" Fill="DarkSlateBlue" />
+                </StackPanel> <!-- /Profile|Menu -->
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden"> <!-- Playlists -->
+                    <StackPanel Orientation="Vertical" Width="96"
+                                Spacing="10">
+                        <controls:PlaylistCard CoverBrush="{DynamicResource SecondaryAccentBrush}" />
+                        <controls:PlaylistCard CoverBrush="{DynamicResource SecondaryAccentBrush}" />
+                        <controls:PlaylistCard CoverBrush="{DynamicResource SecondaryAccentBrush}" />
+                        <controls:PlaylistCard CoverBrush="{DynamicResource SecondaryAccentBrush}" />
+                        <controls:PlaylistCard CoverBrush="{DynamicResource SecondaryAccentBrush}" />
+                        <controls:PlaylistCard CoverBrush="{DynamicResource SecondaryAccentBrush}" />
+                        <controls:PlaylistCard CoverBrush="{DynamicResource SecondaryAccentBrush}" />
+                        <controls:PlaylistCard CoverBrush="{DynamicResource SecondaryAccentBrush}" />
+                        <controls:PlaylistCard CoverBrush="{DynamicResource SecondaryAccentBrush}" />
+                        <controls:PlaylistCard CoverBrush="{DynamicResource SecondaryAccentBrush}" />
+                    </StackPanel>
+                </ScrollViewer> <!-- /Playlists -->
+            </Grid> <!-- /Content -->
+        </Border> <!-- /Menu Bar -->
     </Grid>
-
-
 </Window>

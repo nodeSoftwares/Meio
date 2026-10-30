@@ -1,0 +1,19 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Meio.desktop.Controls.Search"
+             x:Name="root">
+    <Border Width="387" Height="69" Background="{DynamicResource SearchBarColor}" CornerRadius="25">
+        <Grid ColumnDefinitions="Auto, *">
+            <TextBox Grid.Column="1" Background="Transparent" BorderThickness="0" CornerRadius="25"
+                     VerticalContentAlignment="Center" PlaceholderText="Search…" FontSize="24">
+                <TextBox.InnerLeftContent>
+                    <Rectangle Width="24" Height="24" Margin="21, 22"
+                               Fill="{DynamicResource SecondaryAccentBrush}" />
+                </TextBox.InnerLeftContent>
+            </TextBox>
+        </Grid>
+    </Border>
+</UserControl>

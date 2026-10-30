@@ -1,0 +1,21 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Meio.desktop.Controls.Card"
+             x:Name="root">
+    <Border Cursor="Hand">
+        <StackPanel Spacing="16">
+            <Border Width="150"
+                    Height="150"
+                    CornerRadius="16"
+                    BoxShadow="1 4 4 0 #4F000000"
+                    Background="{Binding #root.CoverBrush}" />
+            <Label>
+                <TextBlock HorizontalAlignment="Center"
+                           Text="{Binding #root.Title}" />
+            </Label>
+        </StackPanel>
+    </Border>
+</UserControl>
