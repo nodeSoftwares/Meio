@@ -4,6 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:Meio.desktop.Views"
         xmlns:controls="clr-namespace:Meio.desktop.Controls"
+        xmlns:models="clr-namespace:Meio.desktop.Models"
         mc:Ignorable="d" d:DesignWidth="1366" d:DesignHeight="768"
         x:Class="Meio.desktop.Views.MainWindow"
         x:DataType="views:MainWindow"
@@ -22,19 +23,18 @@
                     <Rectangle Width="36" Height="36" Fill="DarkSlateBlue" />
                 </StackPanel> <!-- /Profile|Menu -->
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden"> <!-- Playlists -->
-                    <StackPanel Orientation="Vertical" Width="96"
-                                Spacing="10">
-                        <controls:PlaylistCard CoverBrush="{DynamicResource SecondaryAccentBrush}" />
-                        <controls:PlaylistCard CoverBrush="{DynamicResource SecondaryAccentBrush}" />
-                        <controls:PlaylistCard CoverBrush="{DynamicResource SecondaryAccentBrush}" />
-                        <controls:PlaylistCard CoverBrush="{DynamicResource SecondaryAccentBrush}" />
-                        <controls:PlaylistCard CoverBrush="{DynamicResource SecondaryAccentBrush}" />
-                        <controls:PlaylistCard CoverBrush="{DynamicResource SecondaryAccentBrush}" />
-                        <controls:PlaylistCard CoverBrush="{DynamicResource SecondaryAccentBrush}" />
-                        <controls:PlaylistCard CoverBrush="{DynamicResource SecondaryAccentBrush}" />
-                        <controls:PlaylistCard CoverBrush="{DynamicResource SecondaryAccentBrush}" />
-                        <controls:PlaylistCard CoverBrush="{DynamicResource SecondaryAccentBrush}" />
-                    </StackPanel>
+                    <ItemsControl ItemsSource="{Binding DummyPlaylistCards}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical" Width="96" Spacing="10" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="models:PlaylistCardModel">
+                                <controls:PlaylistCard CoverBrush="{Binding CoverBrush}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </ScrollViewer> <!-- /Playlists -->
             </Grid> <!-- /Content -->
         </Border> <!-- /Menu Bar -->

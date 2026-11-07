@@ -1,7 +1,10 @@
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Avalonia.Controls;
+using Avalonia.Media;
 using Meio.Api.Interfaces.Services;
 using Meio.desktop.Interfaces.Services;
+using Meio.desktop.Models;
 using Microsoft.Extensions.Logging;
 
 namespace Meio.desktop.Views;
@@ -17,6 +20,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        DataContext = this;
     }
 
     public MainWindow(ILogger<App> logger, INavigationService navigationService, IAudioPlayerService audioPlayerService,
@@ -31,8 +35,21 @@ public partial class MainWindow : Window
         Task.Run(() => _discordService.SetPresence());
 
         InitializeComponent();
+        DataContext = this;
 
         _navigationService.Navigate<HomeView>();
         _logger.LogInformation("Meio is ready!!");
     }
+
+    public ObservableCollection<PlaylistCardModel> DummyPlaylistCards { get; set; } =
+    [
+        new(new SolidColorBrush(Colors.Red)),
+        new(new SolidColorBrush(Colors.DarkGoldenrod)),
+        new(new SolidColorBrush(Colors.DodgerBlue)),
+        new(new SolidColorBrush(Colors.LawnGreen)),
+        new(new SolidColorBrush(Colors.DarkGoldenrod)),
+        new(new SolidColorBrush(Colors.LightPink)),
+        new(new SolidColorBrush(Colors.DarkGoldenrod)),
+        new(new SolidColorBrush(Colors.AntiqueWhite))
+    ];
 }
