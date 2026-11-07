@@ -4,11 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="Meio.desktop.Controls.PlaylistCard"
-             x:Name="root">
+             x:Name="RootPlaylistCard">
     <Border Cursor="Hand" Padding="0,0,0,4">
         <Border Width="86"
                 Height="86"
-                Background="{Binding #root.CoverBrush}"
+                Background="{Binding #RootPlaylistCard.CoverBrush}"
                 CornerRadius="16"
                 BoxShadow="1 4 4 0 #4F000000" />
     </Border>

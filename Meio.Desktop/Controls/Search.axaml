@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="Meio.desktop.Controls.Search"
-             x:Name="root">
+             x:Name="RootSearch">
     <Border Width="387" Height="69" Background="{DynamicResource SearchBarColor}" CornerRadius="25">
         <Grid ColumnDefinitions="Auto, *">
             <TextBox Grid.Column="1" Background="Transparent" BorderThickness="0" CornerRadius="25"
