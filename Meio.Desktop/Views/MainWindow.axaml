@@ -20,7 +20,7 @@
                 <StackPanel Spacing="10"
                             HorizontalAlignment="Center" Orientation="Horizontal"> <!-- Profile|Menu -->
                     <Ellipse Width="50" Height="50" Fill="{DynamicResource PrimaryAccentColor}" />
-                    <Rectangle Width="36" Height="36" Fill="DarkSlateBlue" />
+                    <Svg SvgSource="avares://Meio.desktop/Assets/Icons/menu_hamburger.svg" Width="36" Height="36" />
                 </StackPanel> <!-- /Profile|Menu -->
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden"> <!-- Playlists -->
                     <ItemsControl ItemsSource="{Binding DummyPlaylistCards}">
