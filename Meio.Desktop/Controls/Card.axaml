@@ -4,17 +4,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="Meio.desktop.Controls.Card"
-             x:Name="root">
+             x:Name="RootCard">
     <Border Cursor="Hand">
         <StackPanel Spacing="16">
             <Border Width="150"
                     Height="150"
                     CornerRadius="16"
                     BoxShadow="1 4 4 0 #4F000000"
-                    Background="{Binding #root.CoverBrush}" />
+                    Background="{Binding #RootCard.CoverBrush}" />
             <Label>
                 <TextBlock HorizontalAlignment="Center"
-                           Text="{Binding #root.Title}" />
+                           MaxWidth="150" MaxLines="3"
+                           TextTrimming="CharacterEllipsis"
+                           Text="{Binding #RootCard.Title}"
+                           TextWrapping="Wrap" />
             </Label>
         </StackPanel>
     </Border>
