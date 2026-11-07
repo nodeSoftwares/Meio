@@ -3,8 +3,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="clr-namespace:Meio.desktop.Controls"
+             xmlns:views="clr-namespace:Meio.desktop.Views"
              mc:Ignorable="d"
-             x:Class="Meio.desktop.Views.HomeView">
+             x:Class="Meio.desktop.Views.HomeView"
+             x:DataType="views:HomeView">
     <Grid RowDefinitions="Auto, *" RowSpacing="107" Margin="170, 36, 0, 0">
         <Grid ColumnDefinitions="*, Auto" Margin="0,0,20,0">
             <TextBlock Grid.Column="0" FontSize="40" FontWeight="Bold" xml:space="preserve">Welcome back,
@@ -15,87 +17,27 @@ Evan.</TextBlock>
             <StackPanel Orientation="Vertical" Spacing="17">
                 <Grid RowDefinitions="Auto,*" RowSpacing="17">
                     <TextBlock FontSize="24" FontWeight="Bold">For You</TextBlock>
-                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Disabled"
-                                  HorizontalScrollBarVisibility="Hidden">
-                        <StackPanel Orientation="Horizontal" Spacing="18">
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Nirvana" />
-                        </StackPanel>
-                    </ScrollViewer>
+                    <controls:CardsList Grid.Row="1" ItemsSource="{Binding DummyCardsList}" />
                 </Grid>
 
                 <Grid RowDefinitions="Auto,*" RowSpacing="17">
                     <TextBlock FontSize="24" FontWeight="Bold">For You</TextBlock>
-                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Disabled"
-                                  HorizontalScrollBarVisibility="Hidden">
-                        <StackPanel Orientation="Horizontal" Spacing="18">
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Nirvana" />
-                        </StackPanel>
-                    </ScrollViewer>
+                    <controls:CardsList Grid.Row="1" ItemsSource="{Binding DummyCardsList}" />
                 </Grid>
 
                 <Grid RowDefinitions="Auto,*" RowSpacing="17">
                     <TextBlock FontSize="24" FontWeight="Bold">For You</TextBlock>
-                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Disabled"
-                                  HorizontalScrollBarVisibility="Hidden">
-                        <StackPanel Orientation="Horizontal" Spacing="18">
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Nirvana" />
-                        </StackPanel>
-                    </ScrollViewer>
+                    <controls:CardsList Grid.Row="1" ItemsSource="{Binding DummyCardsList}" />
                 </Grid>
 
                 <Grid RowDefinitions="Auto,*" RowSpacing="17">
                     <TextBlock FontSize="24" FontWeight="Bold">For You</TextBlock>
-                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Disabled"
-                                  HorizontalScrollBarVisibility="Hidden">
-                        <StackPanel Orientation="Horizontal" Spacing="18">
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Nirvana" />
-                        </StackPanel>
-                    </ScrollViewer>
+                    <controls:CardsList Grid.Row="1" ItemsSource="{Binding DummyCardsList}" />
                 </Grid>
 
                 <Grid RowDefinitions="Auto,*" RowSpacing="17">
                     <TextBlock FontSize="24" FontWeight="Bold">For You</TextBlock>
-                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Disabled"
-                                  HorizontalScrollBarVisibility="Hidden">
-                        <StackPanel Orientation="Horizontal" Spacing="18">
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Meow" />
-                            <controls:Card CoverBrush="{DynamicResource SecondaryAccentBrush}" Title="Nirvana" />
-                        </StackPanel>
-                    </ScrollViewer>
+                    <controls:CardsList Grid.Row="1" ItemsSource="{Binding DummyCardsList}" />
                 </Grid>
             </StackPanel>
         </ScrollViewer>
