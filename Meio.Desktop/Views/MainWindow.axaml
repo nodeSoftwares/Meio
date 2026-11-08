@@ -24,7 +24,7 @@
                     <Ellipse Width="50" Height="50" Fill="{DynamicResource PrimaryAccentColor}" />
                     <Svg SvgSource="avares://Meio.desktop/Assets/Icons/menu_hamburger.svg" Width="36" Height="36" />
                 </StackPanel> <!-- /Profile|Menu -->
-                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden"> <!-- Playlists -->
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden" IsScrollInertiaEnabled="True"> <!-- Playlists -->
                     <ItemsControl ItemsSource="{Binding DummyPlaylistCards}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>

@@ -12,7 +12,8 @@
     <ScrollViewer Margin="-170,0,0,0"
                   Padding="170,0,0,0"
                   VerticalScrollBarVisibility="Disabled"
-                  HorizontalScrollBarVisibility="Hidden" ClipToBounds="False">
+                  HorizontalScrollBarVisibility="Hidden"
+                  IsScrollInertiaEnabled="True" ClipToBounds="False">
         <ItemsControl ItemsSource="{Binding #RootCardsList.ItemsSource}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>

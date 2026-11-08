@@ -8,7 +8,8 @@
              x:Class="Meio.desktop.Views.HomeView"
              x:DataType="views:HomeView">
     <ScrollViewer VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                  VerticalScrollBarVisibility="Auto">
+                  VerticalScrollBarVisibility="Auto"
+                  IsScrollInertiaEnabled="True">
         <Grid RowDefinitions="Auto, Auto" RowSpacing="107" Margin="170, 36, 0, 0">
             <Grid Margin="0,0,20,0">
                 <TextBlock HorizontalAlignment="Left" FontSize="40" FontWeight="Bold" xml:space="preserve">Welcome back,
