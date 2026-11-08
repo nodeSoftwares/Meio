@@ -9,13 +9,15 @@
         x:Class="Meio.desktop.Views.MainWindow"
         x:DataType="views:MainWindow"
         TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"
         Title="Meio">
     <Grid>
-        <ContentControl Name="MainContent" ZIndex="0" />
+        <controls:Background ZIndex="0" />
+        <ContentControl Name="MainContent" ZIndex="1" />
         <Border Name="MenuBar" Classes="Menu"
                 Width="120" CornerRadius="0,20,20,0"
                 VerticalAlignment="Stretch" HorizontalAlignment="Left"
-                ZIndex="1"> <!-- Menu Bar -->
+                ZIndex="2"> <!-- Menu Bar -->
             <Grid RowDefinitions="Auto, *" RowSpacing="43" Margin="0, 11, 0, 0"> <!-- Content -->
                 <StackPanel Spacing="10"
                             HorizontalAlignment="Center" Orientation="Horizontal"> <!-- Profile|Menu -->
