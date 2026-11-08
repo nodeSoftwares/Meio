@@ -7,13 +7,16 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Meio.desktop.Controls.CardsList"
              x:Name="RootCardsList"
-             x:DataType="controls:CardsList">
-    <ScrollViewer VerticalScrollBarVisibility="Disabled"
-                  HorizontalScrollBarVisibility="Hidden">
+             x:DataType="controls:CardsList"
+             ClipToBounds="False">
+    <ScrollViewer Margin="-170,0,0,0"
+                  Padding="170,0,0,0"
+                  VerticalScrollBarVisibility="Disabled"
+                  HorizontalScrollBarVisibility="Hidden" ClipToBounds="False">
         <ItemsControl ItemsSource="{Binding #RootCardsList.ItemsSource}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal" Spacing="18" />
+                    <StackPanel Orientation="Horizontal" Spacing="18" ClipToBounds="False" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>

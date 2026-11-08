@@ -7,39 +7,40 @@
              mc:Ignorable="d"
              x:Class="Meio.desktop.Views.HomeView"
              x:DataType="views:HomeView">
-    <Grid RowDefinitions="Auto, *" RowSpacing="107" Margin="170, 36, 0, 0">
-        <Grid ColumnDefinitions="*, Auto" Margin="0,0,20,0">
-            <TextBlock Grid.Column="0" FontSize="40" FontWeight="Bold" xml:space="preserve">Welcome back,
+    <ScrollViewer VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                  VerticalScrollBarVisibility="Auto">
+        <Grid RowDefinitions="Auto, Auto" RowSpacing="107" Margin="170, 36, 0, 0">
+            <Grid Margin="0,0,20,0">
+                <TextBlock HorizontalAlignment="Left" FontSize="40" FontWeight="Bold" xml:space="preserve">Welcome back,
 Evan.</TextBlock>
-            <controls:Search Grid.Column="1" />
-        </Grid>
-        <ScrollViewer Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <StackPanel Orientation="Vertical" Spacing="17">
-                <Grid RowDefinitions="Auto,*" RowSpacing="17">
+                <controls:Search HorizontalAlignment="Right" />
+            </Grid>
+            <StackPanel Grid.Row="1" Orientation="Vertical" Spacing="17">
+                <Grid RowDefinitions="Auto,Auto" RowSpacing="17" ClipToBounds="False">
                     <TextBlock FontSize="24" FontWeight="Bold">For You</TextBlock>
                     <controls:CardsList Grid.Row="1" ItemsSource="{Binding DummyCardsList}" />
                 </Grid>
 
-                <Grid RowDefinitions="Auto,*" RowSpacing="17">
+                <Grid RowDefinitions="Auto,Auto" RowSpacing="17">
                     <TextBlock FontSize="24" FontWeight="Bold">For You</TextBlock>
                     <controls:CardsList Grid.Row="1" ItemsSource="{Binding DummyCardsList}" />
                 </Grid>
 
-                <Grid RowDefinitions="Auto,*" RowSpacing="17">
+                <Grid RowDefinitions="Auto,Auto" RowSpacing="17">
                     <TextBlock FontSize="24" FontWeight="Bold">For You</TextBlock>
                     <controls:CardsList Grid.Row="1" ItemsSource="{Binding DummyCardsList}" />
                 </Grid>
 
-                <Grid RowDefinitions="Auto,*" RowSpacing="17">
+                <Grid RowDefinitions="Auto,Auto" RowSpacing="17">
                     <TextBlock FontSize="24" FontWeight="Bold">For You</TextBlock>
                     <controls:CardsList Grid.Row="1" ItemsSource="{Binding DummyCardsList}" />
                 </Grid>
 
-                <Grid RowDefinitions="Auto,*" RowSpacing="17">
+                <Grid RowDefinitions="Auto,Auto" RowSpacing="17">
                     <TextBlock FontSize="24" FontWeight="Bold">For You</TextBlock>
                     <controls:CardsList Grid.Row="1" ItemsSource="{Binding DummyCardsList}" />
                 </Grid>
             </StackPanel>
-        </ScrollViewer>
-    </Grid>
+        </Grid>
+    </ScrollViewer>
 </UserControl>
