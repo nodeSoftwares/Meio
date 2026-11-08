@@ -3,7 +3,7 @@
     <!-- Colors -->
     <Color x:Key="PrimaryAccentColor">#FFA83939</Color>
     <Color x:Key="SecondaryAccentColor">#FFFFCACA</Color>
-    <Color x:Key="MenuColor">#193D3D3D</Color>
+    <Color x:Key="MenuColor">#323D3D3D</Color>
     <Color x:Key="IconWhiteColor">#E0E0E0</Color>
     <Color x:Key="IconBlackColor">#101010</Color>
     <Color x:Key="LightBackgroundColor">#E0E0E0</Color>

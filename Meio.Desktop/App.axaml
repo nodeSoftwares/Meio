@@ -10,10 +10,12 @@
             <FluentTheme.Palettes>
                 <ColorPaletteResources x:Key="Dark"
                                        Accent="{DynamicResource PrimaryAccentColor}"
-                                       RegionColor="#1C1C1C" />
+                                       RegionColor="#1C1C1C"
+                                       AltHigh="White" />
                 <ColorPaletteResources x:Key="Light"
                                        Accent="{DynamicResource PrimaryAccentColor}"
-                                       RegionColor="#FAFAFA" />
+                                       RegionColor="#FAFAFA"
+                                       AltHigh="Black" />
             </FluentTheme.Palettes>
         </FluentTheme>
 
