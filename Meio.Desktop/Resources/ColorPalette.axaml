@@ -8,7 +8,7 @@
     <Color x:Key="IconBlackColor">#101010</Color>
     <Color x:Key="LightBackgroundColor">#E0E0E0</Color>
     <Color x:Key="DarkBackgroundColor">#1C1C1C</Color>
-    <Color x:Key="SearchBarColor">#3030304B</Color>
+    <Color x:Key="SearchBarColor">#C8303030</Color>
 
     <!-- Brushes -->
     <SolidColorBrush x:Key="IconWhiteBrush" Color="{StaticResource IconWhiteColor}" />
