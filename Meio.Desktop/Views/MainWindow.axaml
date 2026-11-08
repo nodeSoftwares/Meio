@@ -24,7 +24,14 @@
                     <Ellipse Width="50" Height="50" Fill="{DynamicResource PrimaryAccentColor}" />
                     <Svg SvgSource="avares://Meio.desktop/Assets/Icons/menu_hamburger.svg" Width="36" Height="36" />
                 </StackPanel> <!-- /Profile|Menu -->
-                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden" IsScrollInertiaEnabled="True"> <!-- Playlists -->
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden"
+                              IsScrollInertiaEnabled="True"> <!-- Playlists -->
+                    <ScrollViewer.OpacityMask>
+                        <LinearGradientBrush StartPoint="0%,0%" EndPoint="0%,100%">
+                            <GradientStop Offset="0.0" Color="#00000000" />
+                            <GradientStop Offset="0.01" Color="#FF000000" />
+                        </LinearGradientBrush>
+                    </ScrollViewer.OpacityMask>
                     <ItemsControl ItemsSource="{Binding DummyPlaylistCards}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
