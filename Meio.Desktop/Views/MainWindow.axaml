@@ -9,7 +9,6 @@
         x:Class="Meio.desktop.Views.MainWindow"
         x:DataType="views:MainWindow"
         TransparencyLevelHint="AcrylicBlur"
-        Background="Transparent"
         Title="Meio">
     <Grid>
         <controls:Background ZIndex="0" />
@@ -40,7 +39,7 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="models:PlaylistCardModel">
-                                <controls:PlaylistCard CoverBrush="{Binding CoverBrush}" />
+                                <controls:SmallCard CoverBrush="{Binding CoverBrush}" />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>

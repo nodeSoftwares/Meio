@@ -4,11 +4,11 @@ using Avalonia.Media;
 
 namespace Meio.desktop.Controls;
 
-public partial class PlaylistCard : UserControl
+public partial class SmallCard : UserControl
 {
-    public static readonly StyledProperty<Brush> CoverBrushProperty = AvaloniaProperty.Register<PlaylistCard, Brush>("CoverBrush");
+    public static readonly StyledProperty<Brush> CoverBrushProperty = AvaloniaProperty.Register<SmallCard, Brush>("CoverBrush");
 
-    public PlaylistCard()
+    public SmallCard()
     {
         InitializeComponent();
     }
